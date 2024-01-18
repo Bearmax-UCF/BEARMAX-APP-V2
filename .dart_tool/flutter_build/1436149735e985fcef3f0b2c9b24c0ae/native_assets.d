@@ -1,0 +1,1 @@
+ C:\\Users\\savos\\bearmax\\bearmax_app\\.dart_tool\\flutter_build\\1436149735e985fcef3f0b2c9b24c0ae\\native_assets.yaml: 
