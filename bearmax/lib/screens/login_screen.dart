@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
+import 'package:bearmax/screens/home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -37,6 +38,8 @@ class _LoginPageState extends State<LoginPage> {
       // Login successful
       setState(() {
         isLoggedIn = true;
+        Navigator.pushReplacement(
+context,MaterialPageRoute(builder: (context) => const HomePage()),);
       });
 
       // TODO: Handle the token, navigate to the next screen, etc.
@@ -92,7 +95,11 @@ class _LoginPageState extends State<LoginPage> {
               },
               child: const Text('Login'),
             ),
-            const SizedBox(height: 16),
+            //const SizedBox(height: 16),
+
+            
+
+            /*
             isLoggedIn
                 ? Container(
                     width: double.infinity,
@@ -103,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                       style: const TextStyle(color: Colors.white),
                     ),
                   )
-                : Container(), // Hidden when not logged in
+                : Container(), // Hidden when not logged in*/
           ],
         ),
       ),
