@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/screens/home_screen.dart';
+import 'package:bearmax/screens/login_screen.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -39,7 +40,7 @@ class _SignupPageState extends State<SignupPage> {
       setState(() {
         isSignedUp = true;
         Navigator.pushReplacement(
-context,MaterialPageRoute(builder: (context) => const HomePage()),);
+context,MaterialPageRoute(builder: (context) => const LoginPage()),);
       });
     
 
@@ -72,7 +73,7 @@ context,MaterialPageRoute(builder: (context) => const HomePage()),);
 
     return Scaffold(
       appBar: AppBar(
-
+        
         title: const Text('Create Account'),
         centerTitle: true,
         titleTextStyle: const TextStyle(color: Pallete.accentColor, fontSize: 42, fontFamily: 'Urbanist'),
