@@ -21,8 +21,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[currentIndex],
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 45,
         currentIndex: currentIndex,
         onTap: (index) => setState(()=> currentIndex = index),
         items: const [
