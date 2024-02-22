@@ -1,4 +1,5 @@
 import 'package:bearmax/screens/interact_screen.dart';
+import 'package:bearmax/screens/notes_screen.dart';
 import 'package:bearmax/screens/profile_screen.dart';
 import 'package:bearmax/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   final screens = [
-    const ProfileScreen(),
+    const NotesScreen(),
     const InteractScreen(),
-    const SettingsScreen()
+    const ProfileScreen()
   ];
 
   @override
@@ -31,8 +32,8 @@ class _HomePageState extends State<HomePage> {
         onTap: (index) => setState(()=> currentIndex = index),
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_rounded),
-            label: 'Profile',
+            icon: Icon(Icons.notes),
+            label: 'Notes',
           ),
 
           BottomNavigationBarItem(
@@ -41,8 +42,8 @@ class _HomePageState extends State<HomePage> {
           ),
 
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.account_circle_rounded),
+            label: 'Profile',
           ),
         ],
         selectedItemColor: Pallete.accentColor,
