@@ -1,10 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:bearmax/api/api_service.dart';
+import 'package:bearmax/model/signup_model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:bearmax/util/colors.dart';
-import 'package:bearmax/screens/home_screen.dart';
-import 'package:bearmax/screens/login_screen.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -19,61 +17,10 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController passwordController = TextEditingController();
   bool isSignedUp = false;
 
-  Future<void> signupUser() async {
-    if(kDebugMode) {
-      print("in future");
-    }
-
-    const String apiUrl = "http://10.0.2.2:8080/api/auth/register";
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      body: {
-        "email": emailController.text,
-        "firstName": firstNameController.text,
-        "lastName": lastNameController.text,
-        "password": passwordController.text,
-      },
-    );
-
-    if (response.statusCode == 201) {
-      setState(() {
-        isSignedUp = true;
-        Navigator.pushReplacement(
-context,MaterialPageRoute(builder: (context) => const LoginPage()),);
-      });
-    
-
-   // Handle token, navigate to next screen, etc.
-   Map<String, dynamic> data = json.decode(response.body);
-   String token = data['token'];
-
-   if (kDebugMode) {
-    print("Registration successful. Token: $token");
-   }
-  }
-   else {
-    // registration failed
-    setState(() {
-      isSignedUp = false;
-    });
-   }
-
-    if (kDebugMode) {
-        print("Login failed. Status code: ${response.statusCode}");
-        print("Response body: ${response.body}");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print("in build");
-    }
-
     return Scaffold(
       appBar: AppBar(
-        
         title: const Text('Create Account'),
         centerTitle: true,
         titleTextStyle: const TextStyle(color: Pallete.accentColor, fontSize: 42, fontFamily: 'Urbanist'),
@@ -128,7 +75,24 @@ context,MaterialPageRoute(builder: (context) => const LoginPage()),);
 
             ElevatedButton(
               onPressed: () {
-                signupUser();
+                SignupRequest signupRequest = SignupRequest(email: emailController.text, firstName: firstNameController.text, lastName: lastNameController.text, password: passwordController.text);
+                ApiService apiService = ApiService();
+                apiService.signup(signupRequest).then((value) {
+                  if (value.statusCode == 201) {
+                    const snackBar = SnackBar(content: Text("Successfully Created Account"));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+
+                  else if (value.statusCode == 422) {
+                    const snackBar = SnackBar(content: Text('Another User with this email already exists!'));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                  
+                  else {
+                    const snackBar = SnackBar(content: Text('Missing one or more fields.'));
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                });
               },
               child: const Text('Sign Up'),
             ),
@@ -143,7 +107,7 @@ context,MaterialPageRoute(builder: (context) => const LoginPage()),);
                       style: const TextStyle(color: Colors.white),
                     ),
                   )
-                : Container(), // Hidden when not logged in*/
+                : Container(), 
           ],
         ),
       ),
@@ -151,122 +115,3 @@ context,MaterialPageRoute(builder: (context) => const LoginPage()),);
   }
 }
 
-/*
-class SignupPage extends StatelessWidget {
-  const SignupPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            height: MediaQuery.of(context).size.height - 50,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    const SizedBox(height: 60.0),
-                    const Text(
-                      "Create Account",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: <Widget>[
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: "Username",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              borderSide: BorderSide.none),
-                          fillColor: Colors.grey.withOpacity(0.1),
-                          filled: true,
-                          prefixIcon: const Icon(Icons.person)),
-                    ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      decoration: InputDecoration(
-                          hintText: "Email",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(18),
-                              borderSide: BorderSide.none),
-                          fillColor: Colors.grey.withOpacity(0.1),
-                          filled: true,
-                          prefixIcon: const Icon(Icons.email)),
-                    ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Password",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.password),
-                      ),
-                      obscureText: true,
-                    ),
-                    const SizedBox(height: 20),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: "Repeat Password",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.grey.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.password),
-                      ),
-                      obscureText: true,
-                    ),
-                  ],
-                ),
-                Container(
-                    padding: const EdgeInsets.only(top: 3, left: 3),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        "Sign In",
-                        style: TextStyle(fontSize: 20, color: Colors.white),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: Color(0xFF417154),
-                      ),
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text("Already have an account?"),
-                    TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Sign in here.",
-                          style: TextStyle(color: Color(0xFF417154)),
-                        ))
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-*/

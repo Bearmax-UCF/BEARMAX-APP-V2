@@ -1,30 +1,22 @@
-// DOUBLE CHECK THE REQUIRED PART
-
-class LoginResponseModel {
+class LoginResponse {
   final String token;
   final String error;
 
-  LoginResponseModel({
-    required this.token, 
-    required this.error}
-  );
+  LoginResponse({required this.token, required this.error});
 
-  factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
       token: json["token"] ?? "",
       error: json["error"] ?? "",
     );
   }
 }
 
-class LoginRequestModel {
+class LoginRequest {
   String email;
   String password;
 
-  LoginRequestModel({
-    required this.email,
-    required this.password,
-  });
+  LoginRequest({required this.email, required this.password});
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
