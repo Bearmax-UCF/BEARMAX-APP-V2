@@ -8,7 +8,6 @@ class ApiService {
   
   // Login Api Call
   Future<http.Response> login(LoginRequest loginRequest) async {
-    
     final response = await http.post(
       Uri.parse(ApiEndPoints.login),
       body: loginRequest.toJson()
@@ -17,6 +16,7 @@ class ApiService {
     return response;
   }
 
+  // Registration Api Call
   Future<http.Response> signup(SignupRequest signupRequest) async {
     final response = await http.post(
       Uri.parse(ApiEndPoints.register),
