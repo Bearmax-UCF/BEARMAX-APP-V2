@@ -28,18 +28,13 @@ class _SignupPageState extends State<SignupPage> {
         actions: <Widget> [
 
           IconButton(
-            
-           
             icon: const Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),
              onPressed: () {
-              
           },
-          
           )
-          
         ],
       ),
       

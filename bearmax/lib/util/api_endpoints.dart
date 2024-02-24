@@ -19,5 +19,3 @@ class ApiEndPoints {
   static const String userInfo = '${localBaseUrl}api/users/me';
   static const String editUser = '${localBaseUrl}api/users/:id';
 }
-
-
