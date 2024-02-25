@@ -1,5 +1,7 @@
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/login_model.dart';
+import 'package:bearmax/screens/signup_screen.dart';
+import 'package:bearmax/screens/welcome_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -17,15 +19,15 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print("in build");
-    }
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back), // Your icon here
           onPressed: () {
-            // Switch back to title screen -- Make title screen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+            ); // Switch back to title screen -- Make title screen
           },
         ),
       ),
@@ -158,12 +160,13 @@ class _LoginPage extends State<LoginPage> {
               const Text("Don't have an account?"),
               TextButton(
                 onPressed: () {
-                  const snackBar =
-                      SnackBar(content: Text('Switching to signup'));
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignupPage()),
+                  );
                 },
                 child: const Text(
-                  'Sign up here.',
+                  'Sign up here',
                   style: TextStyle(color: Pallete.accentColor),
                 ),
               ),
