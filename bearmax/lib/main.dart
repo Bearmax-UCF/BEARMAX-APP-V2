@@ -1,12 +1,22 @@
+import 'package:bearmax/api/auth_provider.dart';
 import 'package:bearmax/screens/login_screen.dart';
 import 'package:bearmax/screens/login_screen.dart';
 import 'package:bearmax/screens/signup_screen.dart';
 import 'package:bearmax/screens/home_screen.dart';
 import 'package:bearmax/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-
-void main() => runApp(const MyApp());
+void main() {
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: WelcomeScreen(),
     );
   }
 }

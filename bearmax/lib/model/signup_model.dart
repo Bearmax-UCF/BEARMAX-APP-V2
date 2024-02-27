@@ -1,13 +1,12 @@
 class SignupResponse {
-  final String token;
-  final String error;
+  final String message;
+  
 
-  SignupResponse({required this.token, required this.error});
+  SignupResponse({required this.message});
 
   factory SignupResponse.fromJson(Map<String, dynamic> json){
     return SignupResponse(
-      token: json["token"] ?? "",
-      error: json["error"] ?? "",
+      message: json["message"] ?? "",
     );
   }
 }
