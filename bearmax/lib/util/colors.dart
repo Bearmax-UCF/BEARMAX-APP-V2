@@ -7,4 +7,5 @@ class Pallete {
   static const Color accentColorTwo = Color(0xFF9FB7A9);
   static const Color fillColor = Colors.grey;
   static const Color backgroundColor = Colors.white;
+  static const Color black = Colors.black;
 }
