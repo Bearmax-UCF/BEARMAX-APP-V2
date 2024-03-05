@@ -1,4 +1,5 @@
 import 'package:bearmax/api/auth_provider.dart';
+import 'package:bearmax/model/edit_profile_model.dart';
 import 'package:bearmax/model/login_model.dart';
 import 'package:bearmax/model/signup_model.dart';
 import 'package:bearmax/util/api_endpoints.dart';
@@ -42,4 +43,13 @@ class ApiService {
 
     return response;
   }
+
+  /*
+
+  // Edit profile user call
+  Future<http.Response> editUser(EditProfileRequest editProfileRequest, BuildContext context) async {
+
+    String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
+
+  }*/
 }

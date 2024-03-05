@@ -46,7 +46,7 @@ class _LoginPage extends State<LoginPage> {
               const SizedBox(height: 75),
               const Text("Welcome back",
                   style: TextStyle(
-                      color: Pallete.accentColorTwo,
+                      color: Palette.accentColorTwo,
                       fontSize: 42,
                       fontFamily: 'Roboto')),
               const SizedBox(height: 20),
@@ -67,7 +67,7 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                                width: 2, color: Pallete.accentColor),
+                                width: 2, color: Palette.accentColor),
                           ),
                           prefixIcon: Icon(Icons.email)),
                     ),
@@ -85,7 +85,7 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           focusedBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
-                                width: 2, color: Pallete.accentColor),
+                                width: 2, color: Palette.accentColor),
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -93,7 +93,7 @@ class _LoginPage extends State<LoginPage> {
                                 hidePassword = !hidePassword;
                               });
                             },
-                            color: Pallete.accentColor,
+                            color: Palette.accentColor,
                             icon: Icon(hidePassword
                                 ? Icons.visibility_off
                                 : Icons.visibility),
@@ -109,7 +109,7 @@ class _LoginPage extends State<LoginPage> {
                             child: const Text(
                               'Forgot your password?',
                               style: TextStyle(
-                                color: Pallete.accentColor,
+                                color: Palette.accentColor,
                                 fontFamily: 'Roboto',
                               ),
                             ))
@@ -134,7 +134,7 @@ class _LoginPage extends State<LoginPage> {
                       Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const HomePage()),
+                          builder: (context) => HomePage()),
                     );
                       /*
                       const snackBar =
@@ -155,7 +155,7 @@ class _LoginPage extends State<LoginPage> {
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Pallete.accentColor),
+                      MaterialStateProperty.all<Color>(Palette.accentColor),
                   shape: MaterialStateProperty.all<OutlinedBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -168,7 +168,7 @@ class _LoginPage extends State<LoginPage> {
                 child: const Text(
                   'LOGIN',
                   style: TextStyle(
-                      color: Pallete.backgroundColor,
+                      color: Palette.backgroundColor,
                       fontSize: 20,
                       fontFamily: 'Roboto'),
                 ),
@@ -186,7 +186,7 @@ class _LoginPage extends State<LoginPage> {
                   },
                   child: const Text(
                     'Sign up here',
-                    style: TextStyle(color: Pallete.accentColor),
+                    style: TextStyle(color: Palette.accentColor),
                   ),
                 ),
               ])

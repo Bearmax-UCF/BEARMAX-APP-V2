@@ -41,7 +41,7 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(height: 75),
             const Text("Create account",
                 style: TextStyle(
-                    color: Pallete.accentColorTwo,
+                    color: Palette.accentColorTwo,
                     fontSize: 42,
                     fontFamily: 'Roboto')),
             const SizedBox(height: 35),
@@ -60,7 +60,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(width: 2, color: Pallete.accentColor),
+                              BorderSide(width: 2, color: Palette.accentColor),
                         ),
                         prefixIcon: Icon(Icons.email)),
                   ),
@@ -76,7 +76,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(width: 2, color: Pallete.accentColor),
+                              BorderSide(width: 2, color: Palette.accentColor),
                         ),
                         prefixIcon: Icon(Icons.person)),
                   ),
@@ -92,7 +92,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(width: 2, color: Pallete.accentColor),
+                              BorderSide(width: 2, color: Palette.accentColor),
                         ),
                         prefixIcon: Icon(Icons.person)),
                   ),
@@ -109,7 +109,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         focusedBorder: const UnderlineInputBorder(
                           borderSide:
-                              BorderSide(width: 2, color: Pallete.accentColor),
+                              BorderSide(width: 2, color: Palette.accentColor),
                         ),
                         suffixIcon: IconButton(
                           onPressed: () {
@@ -117,7 +117,7 @@ class _SignupPageState extends State<SignupPage> {
                               hidePassword = !hidePassword;
                             });
                           },
-                          color: Pallete.accentColor,
+                          color: Palette.accentColor,
                           icon: Icon(hidePassword
                               ? Icons.visibility_off
                               : Icons.visibility),
@@ -156,7 +156,7 @@ class _SignupPageState extends State<SignupPage> {
               },
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Pallete.accentColor),
+                    MaterialStateProperty.all<Color>(Palette.accentColor),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -168,7 +168,7 @@ class _SignupPageState extends State<SignupPage> {
               child: const Text(
                 'SIGN UP',
                 style: TextStyle(
-                    color: Pallete.backgroundColor,
+                    color: Palette.backgroundColor,
                     fontSize: 20,
                     fontFamily: 'Roboto'),
               ),
@@ -177,7 +177,7 @@ class _SignupPageState extends State<SignupPage> {
                 ? Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
-                    color: Pallete.accentColor,
+                    color: Palette.accentColor,
                     child: Text(
                       'Welcome, ${firstNameController.text}!',
                       style: const TextStyle(color: Colors.white),
@@ -196,7 +196,7 @@ class _SignupPageState extends State<SignupPage> {
                 },
                 child: const Text(
                   'Login here',
-                  style: TextStyle(color: Pallete.accentColor),
+                  style: TextStyle(color: Palette.accentColor),
                 ),
               ),
             ])

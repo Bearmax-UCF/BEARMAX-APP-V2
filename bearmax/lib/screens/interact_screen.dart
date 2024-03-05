@@ -12,7 +12,7 @@ class InteractScreen extends StatelessWidget {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        color: Pallete.primaryColor,
+        color: Palette.primaryColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -43,7 +43,7 @@ class InteractScreen extends StatelessWidget {
                               style: const TextStyle(
                                   fontFamily: 'Roboto',
                                   fontSize: 40,
-                                  color: Pallete.secondaryColor),
+                                  color: Palette.secondaryColor),
                             ),
                           ],
                         );
@@ -58,7 +58,7 @@ class InteractScreen extends StatelessWidget {
                     style: const TextStyle(
                         fontFamily: 'Roboto',
                         fontSize: 18,
-                        color: Pallete.secondaryColor),
+                        color: Palette.secondaryColor),
                   ),
                 ],
               ),
@@ -98,7 +98,7 @@ class InteractScreen extends StatelessWidget {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Pallete.accentColorTwo),
+                                        Palette.accentColorTwo),
                                 shape:
                                     MaterialStateProperty.all<OutlinedBorder>(
                                   RoundedRectangleBorder(
@@ -112,13 +112,13 @@ class InteractScreen extends StatelessWidget {
                               child: const Column(children: [
                                 SizedBox(height: 20),
                                 Icon(Icons.emoji_emotions_outlined,
-                                    color: Pallete.backgroundColor),
+                                    color: Palette.backgroundColor),
                                 SizedBox(height: 5),
                                 Text(
                                   textAlign: TextAlign.center,
                                   'Emotion Game',
                                   style: TextStyle(
-                                    color: Pallete.backgroundColor,
+                                    color: Palette.backgroundColor,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -130,7 +130,7 @@ class InteractScreen extends StatelessWidget {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Pallete.accentColorTwo),
+                                        Palette.accentColorTwo),
                                 shape:
                                     MaterialStateProperty.all<OutlinedBorder>(
                                   RoundedRectangleBorder(
@@ -144,13 +144,13 @@ class InteractScreen extends StatelessWidget {
                               child: const Column(children: [
                                 SizedBox(height: 20),
                                 Icon(Icons.favorite,
-                                    color: Pallete.backgroundColor),
+                                    color: Palette.backgroundColor),
                                 SizedBox(height: 5),
                                 Text(
                                   textAlign: TextAlign.center,
                                   'Stress Relief',
                                   style: TextStyle(
-                                    color: Pallete.backgroundColor,
+                                    color: Palette.backgroundColor,
                                     fontSize: 18,
                                   ),
                                 ),
@@ -168,7 +168,7 @@ class InteractScreen extends StatelessWidget {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Pallete.accentColor),
+                                        Palette.accentColor),
                                 shape:
                                     MaterialStateProperty.all<OutlinedBorder>(
                                   RoundedRectangleBorder(
@@ -182,13 +182,13 @@ class InteractScreen extends StatelessWidget {
                               child: const Column(children: [
                                 SizedBox(height: 30),
                                 Icon(Icons.pause,
-                                    color: Pallete.backgroundColor, size: 24),
+                                    color: Palette.backgroundColor, size: 24),
                                 SizedBox(height: 5),
                                 Text(
                                   textAlign: TextAlign.center,
                                   'Stop',
                                   style: TextStyle(
-                                    color: Pallete.backgroundColor,
+                                    color: Palette.backgroundColor,
                                     fontSize: 25,
                                   ),
                                 ),
