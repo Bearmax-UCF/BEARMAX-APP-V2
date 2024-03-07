@@ -9,7 +9,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Pallete.primaryColor,
+      backgroundColor: Palette.primaryColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -27,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Urbanist',
                       fontSize: 45,
-                      color: Pallete.secondaryColor,
+                      color: Palette.secondaryColor,
                     ),
                   ),
                 ),
@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
               },
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Pallete.backgroundColor),
+                    MaterialStateProperty.all<Color>(Palette.backgroundColor),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -55,7 +55,7 @@ class WelcomeScreen extends StatelessWidget {
               child: const Text(
                 'Sign In',
                 style: TextStyle(
-                    color: Pallete.accentColor,
+                    color: Palette.accentColor,
                     fontSize: 20,
                     fontFamily: 'Roboto'),
               ),
@@ -70,7 +70,7 @@ class WelcomeScreen extends StatelessWidget {
               },
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(Pallete.accentColor),
+                    MaterialStateProperty.all<Color>(Palette.accentColor),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
@@ -82,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
               child: const Text(
                 'Create Account',
                 style: TextStyle(
-                    color: Pallete.backgroundColor,
+                    color: Palette.backgroundColor,
                     fontSize: 20,
                     fontFamily: 'Roboto'),
               ),
