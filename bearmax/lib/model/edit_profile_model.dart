@@ -8,6 +8,7 @@ class EditProfileResponse {
   final List<String> oldPassswords;
   final String hashToken;
   final int version;
+  final String message;
 
   EditProfileResponse(
       {required this.userID,
@@ -18,7 +19,8 @@ class EditProfileResponse {
       required this.isVerified,
       required this.oldPassswords,
       required this.hashToken,
-      required this.version});
+      required this.version,
+      required this.message});
 
   factory EditProfileResponse.fromJson(Map<String, dynamic> json) {
     return EditProfileResponse(
@@ -30,7 +32,9 @@ class EditProfileResponse {
         isVerified: json["isVerified"],
         oldPassswords: json["oldPasswords"],
         hashToken: json["hashToken"],
-        version: json["__v"]);
+        version: json["__v"],
+        message: json["message"] ?? "");
+        
   }
 }
 

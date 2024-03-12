@@ -17,5 +17,5 @@ class ApiEndPoints {
   static const String delUserMedia = '${localBaseUrl}api/userFiles/deleteFileEntry/:id';
   static const String userPreferences = '${localBaseUrl}api/userPreferences/:id';
   static const String userInfo = '${localBaseUrl}api/users/me';
-  static const String editUser = '${localBaseUrl}api/users/:id';
+  static const String editUser = '${localBaseUrl}api/users/';
 }

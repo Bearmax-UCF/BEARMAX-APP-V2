@@ -4,25 +4,30 @@ class NewNoteResponse {
   final String note;
   final String userID;
   final String noteID;
+  final String message;
 
   NewNoteResponse({
     required this.title,
     required this.date,
     required this.note,
     required this.userID,
-    required this.noteID
+    required this.noteID,
+    required this.message
   });
 
   factory NewNoteResponse.fromJson(Map<String, dynamic> json) {
+    final newNote = json["newNote"];
     return NewNoteResponse(
-      title: json["title"] ?? "",
-      date: json["date"] ?? "",
-      note: json["note"] ?? "",
-      userID: json["userID"] ?? "",
-      noteID: json["_id"] ?? "",
+      title: newNote["title"] ?? "",
+      date: newNote["date"] ?? "",
+      note: newNote["note"] ?? "",
+      userID: newNote["userID"] ?? "",
+      noteID: newNote["_id"] ?? "",
+      message: json["message"] ?? ""
     );
   }
 }
+
 
 class NewNoteRequest {
   String title;

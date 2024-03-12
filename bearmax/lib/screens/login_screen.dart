@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:bearmax/api/api_service.dart';
-import 'package:bearmax/api/auth_provider.dart';
+import 'package:bearmax/provider/auth_provider.dart';
 import 'package:bearmax/model/login_model.dart';
 import 'package:bearmax/screens/home_screen.dart';
 import 'package:bearmax/screens/signup_screen.dart';
@@ -130,16 +130,14 @@ class _LoginPage extends State<LoginPage> {
                     if (value.statusCode == 200) {
                       Map<String, dynamic> responseBody =
                           json.decode(value.body);
-                      Provider.of<AuthProvider>(context, listen: false).setAuthToken(responseBody['token']);
+                      Provider.of<AuthProvider>(context, listen: false)
+                          .setAuthToken(responseBody['token']);
+                      Provider.of<AuthProvider>(context, listen: false)
+                          .setAuthID(responseBody['id']);
                       Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePage()),
-                    );
-                      /*
-                      const snackBar =
-                          SnackBar(content: Text("Login Successful"));
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);*/
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
 
                       if (kDebugMode) {
                         print(responseBody['id']);
@@ -158,8 +156,7 @@ class _LoginPage extends State<LoginPage> {
                       MaterialStateProperty.all<Color>(Palette.accentColor),
                   shape: MaterialStateProperty.all<OutlinedBorder>(
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          30.0), 
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                   ),
                   fixedSize:

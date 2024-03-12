@@ -1,7 +1,6 @@
 import 'package:bearmax/screens/interact_screen.dart';
 import 'package:bearmax/screens/notes_screen.dart';
 import 'package:bearmax/screens/profile_screen.dart';
-import 'package:bearmax/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
