@@ -84,7 +84,7 @@ class ProfileScreen extends StatelessWidget {
                   }
                 },
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 45),
               const Divider(
                 color: Palette.grey,
                 thickness: 2,
@@ -108,7 +108,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   elevation: MaterialStateProperty.all(0),
                   fixedSize: MaterialStateProperty.all<Size>(
-                    const Size(120, 100),
+                    const Size(120, 90),
                   ),
                 ),
                 child: const Padding(
@@ -148,7 +148,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   fixedSize: MaterialStateProperty.all<Size>(
-                    const Size(120, 100),
+                    const Size(120, 90),
                   ),
                 ),
                 child: const Padding(
@@ -188,7 +188,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   elevation: MaterialStateProperty.all(0),
                   fixedSize: MaterialStateProperty.all<Size>(
-                    const Size(120, 100),
+                    const Size(120, 90),
                   ),
                 ),
                 child: const Padding(
@@ -230,7 +230,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   fixedSize: MaterialStateProperty.all<Size>(
-                    const Size(120, 100),
+                    const Size(120, 90),
                   ),
                 ),
                 child: const Padding(

@@ -1,4 +1,5 @@
-import 'package:bearmax/api/auth_provider.dart';
+import 'package:bearmax/provider/auth_provider.dart';
+import 'package:bearmax/provider/notes_provider.dart';
 import 'package:bearmax/screens/login_screen.dart';
 import 'package:bearmax/screens/login_screen.dart';
 import 'package:bearmax/screens/signup_screen.dart';
@@ -12,6 +13,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => NoteProvider()),
       ],
       child: const MyApp(),
     ),
