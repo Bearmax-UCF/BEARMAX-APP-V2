@@ -1,6 +1,7 @@
 import 'package:bearmax/model/notes_model.dart';
 import 'package:bearmax/provider/notes_provider.dart';
 import 'package:bearmax/screens/add_note.dart';
+import 'package:bearmax/screens/view_note.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -81,6 +82,7 @@ class _NotesScreenState extends State<NotesScreen> {
     return Text("$substring\n$formattedDate");
   }
 
+  // Single note card display
   Widget singleNote(Note note) {
     return Padding(
         padding: const EdgeInsets.only(left: 25, right: 25.0),
@@ -121,13 +123,34 @@ class _NotesScreenState extends State<NotesScreen> {
                           color: Palette.black, fontWeight: FontWeight.bold)),
                   subtitle: formattedPreview(note),
                   isThreeLine: true,
-                  onTap: () {},
+                  onTap: () {
+                    viewNotePopup(note);
+                  },
                 ),
               ),
               const SizedBox(height: 5)
             ]));
   }
 
+  // View single note popup
+  Future viewNotePopup(Note note) {
+    return showModalBottomSheet(
+      isDismissible: true,
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext c) {
+        
+        return Padding(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+        child:  ViewNoteScreen(note: note));
+        
+       
+      
+      },
+    );
+  }
+
+  // Add new note button
   Widget addNoteButton() {
     return ElevatedButton(
       onPressed: () {
@@ -144,6 +167,7 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
+  // Add new note page
   Future addNotePopup() {
     return showModalBottomSheet(
       isDismissible: true,
@@ -158,7 +182,7 @@ class _NotesScreenState extends State<NotesScreen> {
               topRight: Radius.circular(25.0),
             ),
             child: AddNotesScreen(),
-          ), // Replace with your content
+          ), 
         );
       },
     );

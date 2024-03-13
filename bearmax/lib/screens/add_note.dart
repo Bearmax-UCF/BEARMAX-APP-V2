@@ -40,6 +40,7 @@ class _AddNotesScreen extends State<AddNotesScreen> {
                 ))));
   }
 
+  // Save button
   Widget saveButton() {
     return Padding(
         padding: const EdgeInsets.only(top: 8.0, bottom: 8, left: 8, right: 13),
@@ -64,6 +65,7 @@ class _AddNotesScreen extends State<AddNotesScreen> {
                         fontFamily: 'Roboto')))));
   }
 
+  // API Call
   void noteAPI() {
     NewNoteRequest newNoteRequest = NewNoteRequest(
         title: titleController.text,
@@ -73,8 +75,7 @@ class _AddNotesScreen extends State<AddNotesScreen> {
     ApiService apiService = ApiService();
     apiService.addNote(newNoteRequest, context).then((value) {
       if (value.statusCode == 200) {
-        const snackBar = SnackBar(content: Text("Successfully Added Note"));
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        Navigator.pop(context);
       } else {
         const snackBar = SnackBar(content: Text('Missing one or more fields'));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -82,6 +83,7 @@ class _AddNotesScreen extends State<AddNotesScreen> {
     });
   }
 
+  // Add title
   Widget titleText() {
     return Padding(
         padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
@@ -105,6 +107,7 @@ class _AddNotesScreen extends State<AddNotesScreen> {
         ]));
   }
 
+  // Add note
   Widget bodyText() {
     return Padding(
         padding: const EdgeInsets.only(bottom: 20, left: 20, right: 20),

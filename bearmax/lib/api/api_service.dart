@@ -98,4 +98,33 @@ class ApiService {
 
     return response;
   }
+
+  // Delete note
+  Future<http.Response> deleteNote(BuildContext context, String noteid) async {
+    String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
+    
+    final response = await http.delete(
+      Uri.parse('${ApiEndPoints.note}/$noteid'),
+      headers: {
+        'Authorization': 'Bearer $authToken',
+      }
+    );
+
+    return response;
+  }
+
+  // Edit note
+  Future<http.Response> editNote(EditNoteRequest editNoteRequest, BuildContext context, String noteid) async {
+    String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
+
+    final response = await http.patch(
+      Uri.parse('${ApiEndPoints.note}/$noteid'),
+      headers: {
+        'Authorization': 'Bearer $authToken',
+      },
+      body: editNoteRequest.toJson()
+    );
+
+    return response;
+  }
 }

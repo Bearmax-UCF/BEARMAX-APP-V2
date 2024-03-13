@@ -12,4 +12,5 @@ class Palette {
   static const Color shadow = Color(0xFFD3D3D3);
   static const Color darkShadow = Color(0xFF4C4C4C);
   static const Color red = Colors.red;
+  static const Color blue = Colors.blue;
 }
