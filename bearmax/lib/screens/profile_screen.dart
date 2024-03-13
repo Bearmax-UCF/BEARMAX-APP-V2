@@ -138,7 +138,7 @@ class ProfileScreen extends StatelessWidget {
 
               ElevatedButton(
                 onPressed: () {
-                 // media
+                  // media
                 },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),
@@ -217,10 +217,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                        builder: (context) => const WelcomeScreen()),
-                  );
+                  logoutAlert(context);
                 },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),
@@ -261,6 +258,42 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> logoutAlert(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Log Out'),
+          content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("Are you sure you want to log out?"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel', style: TextStyle(color: Palette.red)),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const WelcomeScreen()),
+                );
+              },
+              child: const Text('OK', style: TextStyle(color: Palette.blue)),
+            ),
+          ],
+        );
+      },
     );
   }
 }
