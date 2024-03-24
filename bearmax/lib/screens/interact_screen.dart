@@ -1,208 +1,250 @@
 import 'dart:convert';
 
+import 'package:bearmax/api/emotion_game_socket.dart';
+import 'package:bearmax/provider/auth_provider.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:bearmax/api/api_service.dart';
+import 'package:provider/provider.dart';
 
-class InteractScreen extends StatelessWidget {
-  const InteractScreen({Key? key}) : super(key: key);
+class InteractScreen extends StatefulWidget {
+  const InteractScreen({super.key});
+
+  @override
+  State<InteractScreen> createState() => _InteractScreenState();
+}
+
+class _InteractScreenState extends State<InteractScreen> {
+  bool emotionGameisPlaying = false;
+
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
+    final userID = Provider.of<AuthProvider>(context, listen: false).authID;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
         color: Palette.primaryColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: <Widget>[
-            const SizedBox(
-              height: 80,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
+            Positioned.fill(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FutureBuilder(
-                    future: ApiService.getUser(context),
-                    builder: (context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData) {
-                        return const Center(child: Text('No data available'));
-                      } else {
-                        final userData = json.decode(snapshot.data.body);
-                        final firstName = userData['me']['firstName'];
-                        return Column(
-                          children: <Widget>[
-                            Text(
-                              "Hello, $firstName",
-                              style: const TextStyle(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 40,
-                                  color: Palette.secondaryColor),
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    DateFormat.yMMMEd().format(DateTime.now()),
-                    style: const TextStyle(
-                        fontFamily: 'Roboto',
-                        fontSize: 18,
-                        color: Palette.secondaryColor),
+                  const SizedBox(height: 80),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        displayWelcome(context),
+                        const SizedBox(height: 10),
+                        displayTime(),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 20),
-            Flexible(
-              child: Container(
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(60),
-                        topRight: Radius.circular(60))),
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        color: Colors.transparent,
-                        height: 80,
-                        width: 80,
-                        child: Image.asset(
-                          'assets/images/face.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(height: 45),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                // Button 1 action
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Palette.accentColorTwo),
-                                shape:
-                                    MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        20.0), // Adjust the value to change the roundness
-                                  ),
-                                ),
-                                fixedSize: MaterialStateProperty.all<Size>(
-                                    const Size(120, 120)),
-                              ),
-                              child: const Column(children: [
-                                SizedBox(height: 20),
-                                Icon(Icons.emoji_emotions_outlined,
-                                    color: Palette.backgroundColor),
-                                SizedBox(height: 5),
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  'Emotion Game',
-                                  style: TextStyle(
-                                    color: Palette.backgroundColor,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ])),
-                          ElevatedButton(
-                              onPressed: () {
-                                // Button 2 action
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Palette.accentColorTwo),
-                                shape:
-                                    MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        20.0), // Adjust the value to change the roundness
-                                  ),
-                                ),
-                                fixedSize: MaterialStateProperty.all<Size>(
-                                    Size(120, 120)),
-                              ),
-                              child: const Column(children: [
-                                SizedBox(height: 20),
-                                Icon(Icons.favorite,
-                                    color: Palette.backgroundColor),
-                                SizedBox(height: 5),
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  'Stress Relief',
-                                  style: TextStyle(
-                                    color: Palette.backgroundColor,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ])),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                // Button 4 action
-                              },
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Palette.accentColor),
-                                shape:
-                                    MaterialStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        20.0), // Adjust the value to change the roundness
-                                  ),
-                                ),
-                                fixedSize: MaterialStateProperty.all<Size>(
-                                    Size(270, 120)),
-                              ),
-                              child: const Column(children: [
-                                SizedBox(height: 30),
-                                Icon(Icons.pause,
-                                    color: Palette.backgroundColor, size: 24),
-                                SizedBox(height: 5),
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  'Stop',
-                                  style: TextStyle(
-                                    color: Palette.backgroundColor,
-                                    fontSize: 25,
-                                  ),
-                                ),
-                              ])),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
+            Positioned.fill(
+              top: MediaQuery.of(context).size.height * 0.3,
+              child: displayMain(height, width, authToken, userID),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  // Popup menu for stress detection
+  Widget bottomMenu() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        ListTile(
+          leading: const Icon(Icons.videocam),
+          title: const Text('Play Video'),
+          onTap: () {
+            // Handle option 1
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.audiotrack),
+          title: const Text('Play Audio'),
+          onTap: () {
+            // Handle option 2
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
+
+  // Display stress detection button
+  Widget stressDetectionButton(height, width) {
+    final buttonWidth = width * 0.65;
+    final buttonHeight = height * 0.13;
+    return ElevatedButton(
+        onPressed: () {
+          // Ask user if they want video or image
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return bottomMenu();
+            },
+          );
+        },
+        style: ButtonStyle(
+          backgroundColor:
+              MaterialStateProperty.all<Color>(Palette.interactColor),
+          shape:
+              MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          )),
+          fixedSize:
+              MaterialStateProperty.all<Size>(Size(buttonWidth, buttonHeight)),
+        ),
+        child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.favorite, color: Palette.backgroundColor),
+              SizedBox(height: 5),
+              Text(
+                  textAlign: TextAlign.center,
+                  'Stress Relief',
+                  style: TextStyle(
+                    color: Palette.backgroundColor,
+                    fontSize: 18,
+                  ))
+            ]));
+  }
+
+  //  Display emotion game button
+  Widget emotionGameButton(height, width, authToken, socket) {
+    final buttonWidth = width * 0.65;
+    final buttonHeight = height * 0.13;
+
+    return ElevatedButton(
+        onPressed: () {
+          // start or stop
+          setState(() {
+            emotionGameisPlaying = !emotionGameisPlaying;
+          });
+
+          // Figure out the socket connection
+          if (emotionGameisPlaying) {
+            // needs to be started
+            socket.startEmotionGame();
+          } else {
+            // Stop and disconnect
+            socket.stopEmotionGame();
+            socket.disconnect();
+          }
+        },
+        style: ButtonStyle(
+          backgroundColor: emotionGameisPlaying
+              ? MaterialStateProperty.all<Color>(Palette.stopEmotionGameColor)
+              : MaterialStateProperty.all<Color>(Palette.interactColor),
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+          ),
+          fixedSize:
+              MaterialStateProperty.all<Size>(Size(buttonWidth, buttonHeight)),
+        ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Icon(
+              emotionGameisPlaying ? Icons.stop : Icons.emoji_emotions_outlined,
+              color: Palette.backgroundColor),
+          const SizedBox(height: 5),
+          Text(
+              textAlign: TextAlign.center,
+              emotionGameisPlaying ? 'End Game' : 'Emotion Game',
+              style: const TextStyle(
+                color: Palette.backgroundColor,
+                fontSize: 18,
+              ))
+        ]));
+  }
+
+  // Display bear picture
+  Widget displayPicture() {
+    return Container(
+        color: Colors.transparent,
+        height: 80,
+        width: 80,
+        child: Image.asset(
+          'assets/images/face.png',
+          fit: BoxFit.cover,
+        ));
+  }
+
+  // Display main area
+  Widget displayMain(height, width, authToken, userID) {
+    EmotionGameSocketService socket = EmotionGameSocketService(authToken, userID);
+    return SizedBox(
+        height: 400,
+        width: MediaQuery.of(context).size.width,
+        child: Container(
+            decoration: const BoxDecoration(
+                color: Palette.backgroundColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60))),
+            child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: Column(children: <Widget>[
+                  const SizedBox(height: 15),
+                  displayPicture(),
+                  const SizedBox(height: 45),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        emotionGameButton(height, width, authToken, socket),
+                        const SizedBox(height: 20),
+                        stressDetectionButton(height, width),
+                      ])
+                ]))));
+  }
+
+  // Display formatted time
+  Widget displayTime() {
+    return Text(DateFormat.yMMMEd().format(DateTime.now()),
+        style: const TextStyle(
+            fontFamily: 'Roboto', fontSize: 18, color: Palette.secondaryColor));
+  }
+
+  // Display welcome message
+  Widget displayWelcome(BuildContext build) {
+    return FutureBuilder(
+        future: ApiService.getUser(context),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error:  ${snapshot.error}'));
+          } else if (!snapshot.hasData) {
+            return const Center(child: Text('No data available'));
+          } else {
+            final userData = json.decode(snapshot.data.body);
+            final firstName = userData['me']['firstName'];
+            return Column(children: <Widget>[
+              Text(
+                "Hello, $firstName",
+                style: const TextStyle(
+                    fontFamily: 'Roboto',
+                    fontSize: 40,
+                    color: Palette.secondaryColor),
+              )
+            ]);
+          }
+        });
   }
 }
