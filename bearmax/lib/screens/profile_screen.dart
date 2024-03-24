@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/screens/edit_profile_screen.dart';
+import 'package:bearmax/screens/user_media.dart';
 import 'package:bearmax/screens/welcome_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/widgets/profile_picture_widget.dart';
@@ -139,6 +140,11 @@ class ProfileScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   // media
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UserMediaScreen()),
+                  );
                 },
                 style: ButtonStyle(
                   elevation: MaterialStateProperty.all(0),

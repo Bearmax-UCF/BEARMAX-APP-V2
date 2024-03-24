@@ -6,7 +6,6 @@ import 'package:bearmax/screens/home_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class ViewNoteScreen extends StatefulWidget {

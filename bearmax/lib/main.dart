@@ -1,9 +1,6 @@
 import 'package:bearmax/provider/auth_provider.dart';
+import 'package:bearmax/provider/files_provider.dart';
 import 'package:bearmax/provider/notes_provider.dart';
-import 'package:bearmax/screens/login_screen.dart';
-import 'package:bearmax/screens/login_screen.dart';
-import 'package:bearmax/screens/signup_screen.dart';
-import 'package:bearmax/screens/home_screen.dart';
 import 'package:bearmax/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +11,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => NoteProvider()),
+        ChangeNotifierProvider(create: (context) => FileProvider())
       ],
       child: const MyApp(),
     ),

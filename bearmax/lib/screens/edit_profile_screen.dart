@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/edit_profile_model.dart';
-import 'package:bearmax/screens/edit_profile_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/widgets/profile_picture_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
