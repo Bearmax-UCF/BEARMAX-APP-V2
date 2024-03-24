@@ -75,6 +75,11 @@ flutter:
     - assets/images/full.png
     - assets/images/waving_full.png
     - assets/images/pfp.png
+    - assets/images/panda-pfp.png
+    - assets/images/bearmax-panda-face-no-title.png
+    - assets/images/bearmax-panda-face-title.png
+    - assets/images/bearmax-panda-full-no-title.png
+    - assets/images/bearmax-panda-full-title.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

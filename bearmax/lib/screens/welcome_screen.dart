@@ -15,6 +15,15 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 150),
+
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/bearmax-panda-face-title.png', width: 330, height: 330),
+              ]
+            ),
+
+            /*
             Stack(
               alignment: Alignment.center,
               children: [
@@ -32,8 +41,8 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            const SizedBox(height: 290),
+            ),*/
+            const SizedBox(height: 130),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacement(

@@ -39,7 +39,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
               children: [
                 const SizedBox(height: 20),
                 ProfilePicture(
-                  image: 'assets/images/pfp.png',
+                  image: 'assets/images/bearmax-panda-full-no-title.png',
                   onClicked: () async {},
                 ),
                 const SizedBox(height: 15),

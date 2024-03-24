@@ -7,8 +7,25 @@ import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/widgets/profile_picture_widget.dart';
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+  @override
+  State<ProfileScreen> createState() => _ProfileScreen();
+}
+
+class _ProfileScreen extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _clearImageCache();
+  }
+
+  Future<void> _clearImageCache() async {
+    // Clear the image cache
+    PaintingBinding.instance.imageCache.clear();
+    // Optionally, you can clear the network image cache too
+    const NetworkImage('').evict();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 20),
               ProfilePicture(
-                image: 'assets/images/pfp.png',
+                image: 'assets/images/bearmax-panda-full-no-title.png',
                 onClicked: () async {},
               ),
               const SizedBox(height: 10),
