@@ -178,10 +178,10 @@ class _InteractScreenState extends State<InteractScreen> {
   Widget displayPicture() {
     return Container(
         color: Colors.transparent,
-        height: 80,
-        width: 80,
+        height: 180,
+        width: 200,
         child: Image.asset(
-          'assets/images/face.png',
+          'assets/images/bearmax-panda-face-no-title.png',
           fit: BoxFit.cover,
         ));
   }
@@ -201,9 +201,9 @@ class _InteractScreenState extends State<InteractScreen> {
             child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(children: <Widget>[
-                  const SizedBox(height: 15),
+                  //const SizedBox(height: 10),
                   displayPicture(),
-                  const SizedBox(height: 45),
+                  //const SizedBox(height: 20),
                   Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

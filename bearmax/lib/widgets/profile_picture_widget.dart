@@ -29,15 +29,15 @@ class ProfilePicture extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(
-          color: Palette.grey, // Choose your desired border color here
-          width: 2, // Adjust the border width as needed
+          color: Palette.grey, 
+          width: 2,
         ),
       ),
       child: ClipOval(
         child: Material(
           color: Colors.transparent,
           child: Ink.image(
-            image: const AssetImage('assets/images/pfp.png'),
+            image: const AssetImage('assets/images/panda-pfp.png'),
             fit: BoxFit.cover,
             child: InkWell(
               onTap: onClicked,
