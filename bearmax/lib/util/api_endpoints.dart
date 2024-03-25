@@ -24,4 +24,6 @@ class ApiEndPoints {
   static const String uploadAudio = '${localBaseUrl}api/uploadFiles/uploadAudio/';
   static const String uploadVideo = '${localBaseUrl}api/uploadFiles/uploadVideo/';
   static const String getAllFiles =  '${localBaseUrl}api/azureBlob/listBlobs/';
+
+  static const String forgotPassword = '${localBaseUrl}api/auth/forgotPasswordRequest';
 }

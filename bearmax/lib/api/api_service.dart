@@ -55,7 +55,11 @@ class ApiService {
         Provider.of<AuthProvider>(context, listen: false).authToken;
     String authID = Provider.of<AuthProvider>(context, listen: false).authID;
 
-    String apiString = '${ApiEndPoints.editUser}/$authID';
+    String apiString = '${ApiEndPoints.editUser}$authID';
+
+    if (kDebugMode) {
+      print(apiString);
+    }
 
     final response = await http.patch(
       Uri.parse(apiString),
@@ -64,6 +68,20 @@ class ApiService {
       },
       body: editProfileRequest.toJson(),
     );
+
+    return response;
+  }
+
+  // Delete user profile
+  Future<http.Response> deleteUser(BuildContext context) async {
+    String authToken =
+        Provider.of<AuthProvider>(context, listen: false).authToken;
+    String authID = Provider.of<AuthProvider>(context, listen: false).authID;
+
+    String apiString = '${ApiEndPoints.editUser}$authID';
+
+    final response = await http.delete(Uri.parse(apiString),
+        headers: {'Authorization': 'Bearer $authToken'});
 
     return response;
   }
@@ -267,24 +285,21 @@ class ApiService {
 
   }*/
 
-
   // Get all files
   Future<List<FileBlob>> allFiles(BuildContext context) async {
-    String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
+    String authToken =
+        Provider.of<AuthProvider>(context, listen: false).authToken;
     String authID = Provider.of<AuthProvider>(context, listen: false).authID;
     String apiString = '${ApiEndPoints.getAllFiles}$authID';
 
-    final response = await http.get(
-      Uri.parse(apiString), 
-      headers: {
+    final response = await http.get(Uri.parse(apiString), headers: {
       'Authorization': 'Bearer $authToken',
     });
 
-    if(kDebugMode) {
+    if (kDebugMode) {
       print(response.statusCode);
       print(response.body);
     }
-
 
     if (response.statusCode == 200) {
       if (kDebugMode) {
@@ -297,5 +312,4 @@ class ApiService {
       throw Exception("${response.statusCode}: ${response.body}");
     }
   }
-
 }
