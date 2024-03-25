@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/screens/edit_profile_screen.dart';
+import 'package:bearmax/screens/settings_screen.dart';
 import 'package:bearmax/screens/user_media.dart';
 import 'package:bearmax/screens/welcome_screen.dart';
 import 'package:bearmax/util/colors.dart';
@@ -14,19 +15,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreen extends State<ProfileScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _clearImageCache();
-  }
-
-  Future<void> _clearImageCache() async {
-    // Clear the image cache
-    PaintingBinding.instance.imageCache.clear();
-    // Optionally, you can clear the network image cache too
-    const NetworkImage('').evict();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -201,7 +189,11 @@ class _ProfileScreen extends State<ProfileScreen> {
 
               ElevatedButton(
                 onPressed: () {
-                  // Button 2 action
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsScreen()),
+                  );
                 },
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all<OutlinedBorder>(
