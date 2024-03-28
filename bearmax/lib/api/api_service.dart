@@ -151,7 +151,6 @@ class ApiService {
   }
 
   // Add file
-  /*
   Future<void> addFile(BuildContext context, FilePickerResult fpr) async {
     String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
     String authID = Provider.of<AuthProvider>(context, listen: false).authID;
@@ -188,102 +187,35 @@ class ApiService {
     if(kDebugMode) {
       print(filepath);
     }
-    var headers = {'Authorization': 'Bearer $authToken'};
-    var request = http.MultipartRequest('POST', Uri.parse(apiString));
-    request.files.add(await http.MultipartFile.fromPath('file', filePath));
-    request.headers.addAll(headers);
 
-    http.StreamedResponse response = await request.send();
+  var headers = {'Authorization': 'Bearer $authToken'};
+  var request = http.MultipartRequest('POST', Uri.parse(apiString));
+  request.files.add(await http.MultipartFile.fromPath('file', filePath));
+  request.headers.addAll(headers);
 
-    
+  http.StreamedResponse response = await request.send();
 
-    // Read the stream and convert it into a string
-  String responseBody = await response.stream.bytesToString();
+String responseBody = await response.stream.bytesToString();
+    Map<String, dynamic> jsonData = json.decode(responseBody);
+    if(kDebugMode) {
+      print("JSONDATA");
+      print(jsonData);
+    }
 
-  // Print the response body
+if (response.statusCode == 200) {
   if (kDebugMode) {
-    print(responseBody);
+    //print(await response.stream.bytesToString());
+    print("SUCCESS");
   }
-
+}
+else {
   if (kDebugMode) {
-      print('AFTER MIME type: $mimeType');
-      print(file);
-    }
-
-    
-    //List<int> bytes = await response.stream.toBytes();
-
-    // Create a Response object from the byte array and other response information
-    //http.Response r = http.Response.bytes(bytes, response.statusCode,
-        //headers: response.headers);
-
-   
-
-    //return r;
-  }*/
-
-  // Get file
-  /*
-  Future<void> addFile(BuildContext context, FilePickerResult result) async {
-    String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
-    String authID = Provider.of<AuthProvider>(context, listen: false).authID;
-
-    final file = result.files.first;
-    final filePath = file.path;
-    final mimeType = filePath != null ? lookupMimeType(filePath) : null;
-    final contentType = mimeType != null ? MediaType.parse(mimeType) : null;
-
-    final fileReadStream = file.readStream;
-    if (fileReadStream == null) {
-      throw Exception('Cannot read file from null stream');
-    }
-
-    final stream = http.ByteStream(fileReadStream);
-
-    String url;
-
-    if (mimeType == "audio/mpeg") {
-      if(kDebugMode) {
-        print("audio");
-      }
-      url = '${ApiEndPoints.uploadAudio}$authID';
-    }
-    else if (mimeType == "video/mp4") {
-      if(kDebugMode) {
-        print("video");
-      }
-      url = '${ApiEndPoints.uploadVideo}$authID';
-    }
-    else {
-      throw Exception("exception: $mimeType");
-    }
-
-    final headers = {'Authorization': 'Bearer $authToken'};
-    final request = http.MultipartRequest('POST', Uri.parse(url));
-    final multipartFile = http.MultipartFile(
-      'file',
-      stream,
-      file.size,
-      filename: file.name,
-      contentType: contentType,
-    );
-    request.files.add(multipartFile);
-    request.headers.addAll(headers);
-
-    final httpClient = http.Client();
-    final response = await httpClient.send(request);
-
-    if (response.statusCode != 200) {
-      throw Exception('HTTP ${response.statusCode}');
-    }
-
-    final body = await response.stream.transform(utf8.decoder).join();
-
-    if (kDebugMode) {
-      print(body);
-    }
-
-  }*/
+    print(response.reasonPhrase);
+    print(response.statusCode);
+    print(response.headers['content-type']);
+  }
+}
+  }
 
   // Get all files
   Future<List<FileBlob>> allFiles(BuildContext context) async {
@@ -302,11 +234,7 @@ class ApiService {
     }
 
     if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print('GOT ALL FILES');
-      }
-
-      final List<dynamic> jsonData = json.decode(response.body);
+      final List<dynamic> jsonData = json.decode(response.body)['blobsList'];
       return jsonData.map((data) => FileBlob.fromJson(data)).toList();
     } else {
       throw Exception("${response.statusCode}: ${response.body}");

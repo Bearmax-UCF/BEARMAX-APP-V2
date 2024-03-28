@@ -4,11 +4,12 @@ import 'package:bearmax/util/api_endpoints.dart';
 import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
-class EmotionGameSocketService {
+class SocketService {
   late io.Socket socket;
   final String authToken;
   final String userID;
-  Map<String, dynamic> data = {
+
+  Map<String, dynamic> emotionGameData = {
     "Correct": [1, 1, 1, 1],
     "Wrong": [0, 0, 0, 0],
     "GameFin": "2024-03-16T22:38:24.000Z",
@@ -16,7 +17,7 @@ class EmotionGameSocketService {
     "NumPlays": 2
   };
 
-  EmotionGameSocketService(this.authToken, this.userID) {
+  SocketService(this.authToken, this.userID) {
     final fullURL = "${ApiEndPoints.localHost}?userID=$userID";
     socket = io.io(
         fullURL,
@@ -59,12 +60,25 @@ class EmotionGameSocketService {
   // Stop Game
   void stopEmotionGame() {
     socket.emit('emotionGame', 'stop');
-    saveGameData(data);
+    saveGameData(emotionGameData);
   }
 
   // Save data
   void saveGameData(Map<String, dynamic> data) {
     socket.emit('emotionGameStats', json.encode(data));
+  }
+
+  // Play sensory overload
+  void sensoryOverload(String url) {
+    Map<String, dynamic> sensoryOverloadData = {
+      "mediaURL": url,
+    };
+
+    socket.emit('playMedia', json.encode(sensoryOverloadData));
+
+    if (kDebugMode) {
+      print("Playing: $url");
+    }
   }
 
   // Disconnect

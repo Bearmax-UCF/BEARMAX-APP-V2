@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/user_files_model.dart';
 import 'package:bearmax/provider/files_provider.dart';
+import 'package:bearmax/provider/media_provider.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:mime/mime.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserMediaScreen extends StatefulWidget {
   const UserMediaScreen({super.key});
@@ -19,6 +21,24 @@ class UserMediaScreen extends StatefulWidget {
 }
 
 class _UserMediaScreenState extends State<UserMediaScreen> {
+  bool isFavorited = false;
+  String? favoritedAudioFile;
+  String? favoritedVideoFile;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavoritedFiles();
+  }
+
+  void _loadFavoritedFiles() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      favoritedAudioFile = prefs.getString('favoritedAudioFile');
+      favoritedVideoFile = prefs.getString('favoritedVideoFile');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +74,6 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
             },
           ),
         ),
-        
         Positioned(
           bottom: 30,
           right: 20,
@@ -69,8 +88,8 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
     return Padding(
         padding: const EdgeInsets.only(left: 25, right: 25.0),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const SizedBox(height: 5),
               Container(
@@ -79,12 +98,12 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
                   color: Palette.backgroundColor,
                   border: Border(
                       left: BorderSide(
-                        color: Colors.grey, // specify your color here
-                        width: 0.5, // specify your width here
+                        color: Colors.grey,
+                        width: 0.5,
                       ),
                       right: BorderSide(
-                        color: Colors.grey, // specify your color here
-                        width: 0.5, // specify your width here
+                        color: Colors.grey,
+                        width: 0.5,
                       ),
                       bottom: BorderSide(
                         color: Colors.grey,
@@ -100,7 +119,56 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
                   ],
                 ),
                 child: ListTile(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                  leading: IconButton(
+                      highlightColor: Colors.transparent,
+                      splashColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      icon: favoritedAudioFile == file.blobName ||
+                              favoritedVideoFile == file.blobName
+                          ? const Icon(Icons.favorite,
+                              color: Palette.stopEmotionGameColor)
+                          : const Icon(Icons.favorite_border_outlined),
+                      onPressed: () {
+                        // Audio
+                        if (file.blobName.contains('.mp3')) {
+                          if (favoritedAudioFile == file.blobName) {
+                            // If it's already favorited, un-favorite it
+                            setState(() {
+                              favoritedAudioFile = null;
+                            });
+                          } else {
+                            // If it's not favorited, set it as the new favorite and update the state
+                            setState(() {
+                              favoritedAudioFile = file.blobName;
+                              Provider.of<MediaProvider>(context, listen: false)
+                                  .setAudioURL(file.blobName);
+                            });
+                          }
+                        }
+
+                        // Video
+                        if (file.blobName.contains('.mp4')) {
+                          if (favoritedVideoFile == file.blobName) {
+                            // If it's already favorited, un-favorite it
+                            setState(() {
+                              favoritedVideoFile = null;
+                            });
+                          } else {
+                            // If it's not favorited, set it as the new favorite and update the state
+                            setState(() {
+                              favoritedVideoFile = file.blobName;
+                              Provider.of<MediaProvider>(context, listen: false)
+                                  .setVideoURL(file.blobName);
+                            });
+                          }
+                        }
+
+                        // Video
+                      }),
                   title: Text(file.blobName,
+                      textAlign: TextAlign.left,
                       style: const TextStyle(
                           color: Palette.black, fontWeight: FontWeight.bold)),
                   onTap: () {
@@ -130,15 +198,11 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
   }
 
   void pickFile(BuildContext context) async {
-
-    final result = await FilePicker.platform.pickFiles(
-     
-    );
+    final result = await FilePicker.platform.pickFiles(type: FileType.any);
 
     if (result == null || result.files.isEmpty) {
       throw Exception('No files picked or file picker was canceled');
     }
-
 
     /*
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -161,7 +225,7 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
         }
       }
 
-*/ added
+ added*/
       
 final filePath = result.files.single.path;
   if (filePath != null) {
@@ -171,16 +235,15 @@ final filePath = result.files.single.path;
       print('MIME type: $mimeType');
     } 
       */
-      /// Load result and file details
-      //PlatformFile file = result.files.first;
+    /// Load result and file details
+    //PlatformFile file = result.files.first;
 
-      // Call api
-      ApiService apiService = ApiService();
-      //apiService.addFile(context, result);
-     
-      //apiService.addFile(context,result);
+    // Call api
+    ApiService apiService = ApiService();
+    // ignore: use_build_context_synchronously
+    await apiService.addFile(context, result);
 
-      /*
+    /*
       // ignore: use_build_context_synchronously
       apiService.addFile(context, result).then((value) {
         Map<String, dynamic> responseBody = json.decode(value.body);
@@ -198,7 +261,5 @@ final filePath = result.files.single.path;
         }
       }
       );*/
-
-      
-    } 
   }
+}
