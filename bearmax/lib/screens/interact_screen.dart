@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:bearmax/api/emotion_game_socket.dart';
+import 'package:bearmax/api/socket_service.dart';
 import 'package:bearmax/provider/auth_provider.dart';
+import 'package:bearmax/provider/media_provider.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -62,7 +63,7 @@ class _InteractScreenState extends State<InteractScreen> {
   }
 
   // Popup menu for stress detection
-  Widget bottomMenu() {
+  Widget bottomMenu(SocketService socket) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -72,6 +73,14 @@ class _InteractScreenState extends State<InteractScreen> {
           onTap: () {
             // Handle option 1
             Navigator.pop(context);
+
+            // Call socket with video
+            if (Provider.of<MediaProvider>(context, listen: false).videoURL == '') {
+              const snackBar = SnackBar(content: Text('Please select valid .mp4 file in My Media'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else {
+              socket.sensoryOverload(Provider.of<MediaProvider>(context, listen: false).videoURL);
+            }
           },
         ),
         ListTile(
@@ -80,6 +89,14 @@ class _InteractScreenState extends State<InteractScreen> {
           onTap: () {
             // Handle option 2
             Navigator.pop(context);
+            
+            // Call socket stuff
+            if (Provider.of<MediaProvider>(context, listen: false).audioURL == '') {
+              const snackBar = SnackBar(content: Text('Please select valid .mp3 file in My Media'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else {
+              socket.sensoryOverload(Provider.of<MediaProvider>(context, listen: false).audioURL);
+            }
           },
         ),
       ],
@@ -87,7 +104,7 @@ class _InteractScreenState extends State<InteractScreen> {
   }
 
   // Display stress detection button
-  Widget stressDetectionButton(height, width) {
+  Widget stressDetectionButton(height, width, SocketService socket) {
     final buttonWidth = width * 0.65;
     final buttonHeight = height * 0.13;
     return ElevatedButton(
@@ -96,7 +113,7 @@ class _InteractScreenState extends State<InteractScreen> {
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
-              return bottomMenu();
+              return bottomMenu(socket);
             },
           );
         },
@@ -188,7 +205,8 @@ class _InteractScreenState extends State<InteractScreen> {
 
   // Display main area
   Widget displayMain(height, width, authToken, userID) {
-    EmotionGameSocketService socket = EmotionGameSocketService(authToken, userID);
+    SocketService socket = SocketService(authToken, userID);
+
     return SizedBox(
         height: 400,
         width: MediaQuery.of(context).size.width,
@@ -209,7 +227,7 @@ class _InteractScreenState extends State<InteractScreen> {
                       children: [
                         emotionGameButton(height, width, authToken, socket),
                         const SizedBox(height: 20),
-                        stressDetectionButton(height, width),
+                        stressDetectionButton(height, width, socket),
                       ])
                 ]))));
   }
