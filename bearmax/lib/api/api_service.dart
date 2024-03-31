@@ -15,7 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:mime/mime.dart';
 import 'package:provider/provider.dart';
 
-import 'package:http_parser/http_parser.dart';
+//import 'package:http_parser/http_parser.dart';
 
 class ApiService {
   Map<String, dynamic> data = {};

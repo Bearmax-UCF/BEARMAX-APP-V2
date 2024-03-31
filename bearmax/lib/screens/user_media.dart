@@ -164,8 +164,6 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
                             });
                           }
                         }
-
-                        // Video
                       }),
                   title: Text(file.blobName,
                       textAlign: TextAlign.left,
