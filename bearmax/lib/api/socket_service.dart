@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bearmax/util/api_endpoints.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +19,7 @@ class SocketService {
   };
 
   SocketService(this.authToken, this.userID) {
-    final fullURL = "${ApiEndPoints.localHost}?userID=$userID";
+    final fullURL = "${ApiEndPoints.socketUrl}?userID=$userID";
     socket = io.io(
         fullURL,
         io.OptionBuilder()
@@ -28,6 +29,9 @@ class SocketService {
             .build());
 
     if (kDebugMode) {
+      print('HTTP_PROXY: ${Platform.environment['HTTP_PROXY']}');
+  print('NO_PROXY: ${Platform.environment['NO_PROXY']}');
+  print('');
       print('Connecting to URL: ${socket.io.uri}');
     }
 

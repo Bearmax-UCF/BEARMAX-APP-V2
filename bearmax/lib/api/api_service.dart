@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bearmax/model/new_note_model.dart';
 import 'package:bearmax/model/user_files_model.dart';
@@ -12,6 +13,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:provider/provider.dart';
 
@@ -151,7 +153,7 @@ class ApiService {
   }
 
   // Add file
-  Future<void> addFile(BuildContext context, FilePickerResult fpr) async {
+  Future<http.StreamedResponse> addFile(BuildContext context, FilePickerResult fpr) async {
     String authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
     String authID = Provider.of<AuthProvider>(context, listen: false).authID;
 
@@ -160,61 +162,41 @@ class ApiService {
 
     final filepath = file.path;
     final mimeType = lookupMimeType(filepath!);
+    String filePath = filepath.toString();
 
-    if (kDebugMode) {
-      print('MIME type: $mimeType');
-      print(file);
-    }
-
-    if (mimeType == "audio/mpeg") {
-      if(kDebugMode) {
-        print("audio");
-      }
+    if (mimeType == "audio/mpeg") 
+    {
       apiString = '${ApiEndPoints.uploadAudio}$authID';
-    }
-    else if (mimeType == "video/mp4") {
-      if(kDebugMode) {
-        print("video");
-      }
+    } 
+    else if (mimeType == "video/mp4") 
+    {
       apiString = '${ApiEndPoints.uploadVideo}$authID';
-    }
-    else {
-      //apiString = '${ApiEndPoints.uploadVideo}$authID';
+    } 
+    else 
+    {
       throw Exception("exception: $mimeType");
     }
 
-    String filePath = filepath.toString();
-    if(kDebugMode) {
-      print(filepath);
-    }
+    var headers = {
+      'Authorization': 'Bearer $authToken',
+      'Content-type': mimeType ?? 'application/octet-stream',
+    };
+    var request = http.MultipartRequest('POST', Uri.parse(apiString));
+    request.files.add(
+      http.MultipartFile(
+        'file', 
+        File(filePath).readAsBytes().asStream(), 
+        file.size,
+        filename: file.name, 
+        contentType: MediaType.parse(
+            mimeType ?? 'application/octet-stream'), 
+      ),
+    );
+    request.headers.addAll(headers);
 
-  var headers = {'Authorization': 'Bearer $authToken'};
-  var request = http.MultipartRequest('POST', Uri.parse(apiString));
-  request.files.add(await http.MultipartFile.fromPath('file', filePath));
-  request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
 
-  http.StreamedResponse response = await request.send();
-
-String responseBody = await response.stream.bytesToString();
-    Map<String, dynamic> jsonData = json.decode(responseBody);
-    if(kDebugMode) {
-      print("JSONDATA");
-      print(jsonData);
-    }
-
-if (response.statusCode == 200) {
-  if (kDebugMode) {
-    //print(await response.stream.bytesToString());
-    print("SUCCESS");
-  }
-}
-else {
-  if (kDebugMode) {
-    print(response.reasonPhrase);
-    print(response.statusCode);
-    print(response.headers['content-type']);
-  }
-}
+    return response;
   }
 
   // Get all files

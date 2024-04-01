@@ -196,68 +196,33 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
   }
 
   void pickFile(BuildContext context) async {
-    final result = await FilePicker.platform.pickFiles(type: FileType.any);
+    // Choose audio or video file
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['mp3', 'mp4'],
+    );
 
     if (result == null || result.files.isEmpty) {
       throw Exception('No files picked or file picker was canceled');
     }
 
-    /*
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      //type: FileType.custom,
-      //allowedExtensions: ['mp3', 'mp4'],
-    );
-
-    
-
-    if (result != null && result.files.single.path != null) {
-      //final mimeType = lookupMimeType(result.files.single.path);
-      /*
-      final filepath = result.files.single.path;
-      if(filepath != null) {
-        final mimeType = lookupMimeType(filepath);
-        if (mimeType != null) {
-          if (kDebugMode) {
-            print('MIME type: $mimeType');
-          }
-        }
-      }
-
- added*/
-      
-final filePath = result.files.single.path;
-  if (filePath != null) {
-    final mimeType = lookupMimeType(filePath);
-    if (mimeType != null) {
-      // Use the MIME type
-      print('MIME type: $mimeType');
-    } 
-      */
-    /// Load result and file details
-    //PlatformFile file = result.files.first;
-
-    // Call api
+    // Post to API
     ApiService apiService = ApiService();
     // ignore: use_build_context_synchronously
-    await apiService.addFile(context, result);
-
-    /*
-      // ignore: use_build_context_synchronously
-      apiService.addFile(context, result).then((value) {
-        Map<String, dynamic> responseBody = json.decode(value.body);
-
-        if(kDebugMode) {
-          print(value.statusCode);
-        }
-
-        if (value.statusCode == 200) {
-          var snackBar = SnackBar(content: Text(responseBody["blobName"]));
+    await apiService.addFile(context, result).then((value) async {
+      String val = await value.stream.bytesToString();
+      Map<String, dynamic> responseBody = json.decode(val);
+      if (value.statusCode == 200) {
+        const snackBar = SnackBar(content: Text('File uploaded successfully'));
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        } else {
-          var snackBar = SnackBar(content: Text(responseBody['message']));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        }
+      } 
+
+      else {
+        var snackBar = SnackBar(content: Text(responseBody['message']));
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
-      );*/
+    });
   }
 }
