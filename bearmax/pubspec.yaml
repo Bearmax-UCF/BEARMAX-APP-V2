@@ -45,6 +45,7 @@ dependencies:
   mime: ^1.0.5
   http_parser: ^4.0.2
   socket_io_client: ^2.0.3+1
+  cool_alert: ^2.0.1
 
 dev_dependencies:
   flutter_test:

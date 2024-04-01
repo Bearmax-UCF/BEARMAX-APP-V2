@@ -7,8 +7,8 @@ class ApiEndPoints {
   // Verification
   static const String register = '${liveBaseUrl}api/auth/register';
   static const String login = '${liveBaseUrl}api/auth/login';
-  static const String forgotPassword = '${localBaseUrl}api/auth/forgotPasswordRequest'; //
-  static const String emailVerification = '${localBaseUrl}api/auth/verify?token=&id='; // 
+  static const String forgotPassword = '${liveBaseUrl}api/auth/forgotPasswordRequest';
+  //static const String emailVerification = '${localBaseUrl}api/auth/verify?token=&id='; // 
 
   // User Information
   static const String userInfo = '${liveBaseUrl}api/users/me'; 

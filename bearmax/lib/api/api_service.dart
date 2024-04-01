@@ -17,8 +17,6 @@ import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 import 'package:provider/provider.dart';
 
-//import 'package:http_parser/http_parser.dart';
-
 class ApiService {
   Map<String, dynamic> data = {};
 
@@ -34,6 +32,14 @@ class ApiService {
   Future<http.Response> signup(SignupRequest signupRequest) async {
     final response = await http.post(Uri.parse(ApiEndPoints.register),
         body: signupRequest.toJson());
+
+    return response;
+  }
+
+  // Forgot Password Api Call
+  Future<http.Response> forgotPassword(String email) async {
+    final response = await http.post(Uri.parse(ApiEndPoints.forgotPassword),
+    body: {'email': email});
 
     return response;
   }
