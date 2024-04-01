@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/provider/auth_provider.dart';
 import 'package:bearmax/model/login_model.dart';
+import 'package:bearmax/screens/forgot_password.dart';
 import 'package:bearmax/screens/home_screen.dart';
 import 'package:bearmax/screens/signup_screen.dart';
 import 'package:bearmax/screens/welcome_screen.dart';
@@ -27,12 +28,12 @@ class _LoginPage extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back), 
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-            ); // Switch back to title screen -- Make title screen
+            );
           },
         ),
       ),
@@ -61,8 +62,7 @@ class _LoginPage extends State<LoginPage> {
                           hintText: "Email",
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors
-                                  .grey, 
+                              color: Colors.grey,
                             ),
                           ),
                           focusedBorder: UnderlineInputBorder(
@@ -79,8 +79,7 @@ class _LoginPage extends State<LoginPage> {
                           hintText: "Password",
                           enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors
-                                  .grey, 
+                              color: Colors.grey,
                             ),
                           ),
                           focusedBorder: const UnderlineInputBorder(
@@ -105,7 +104,14 @@ class _LoginPage extends State<LoginPage> {
                       children: [
                         const Spacer(),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPasswordScreen()),
+                              );
+                            },
                             child: const Text(
                               'Forgot your password?',
                               style: TextStyle(
@@ -127,7 +133,6 @@ class _LoginPage extends State<LoginPage> {
                   ApiService apiService = ApiService();
 
                   apiService.login(loginRequest).then((value) {
-                    
                     if (value.statusCode == 200) {
                       Map<String, dynamic> responseBody =
                           json.decode(value.body);

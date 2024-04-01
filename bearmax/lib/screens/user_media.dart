@@ -6,11 +6,8 @@ import 'package:bearmax/provider/files_provider.dart';
 import 'package:bearmax/provider/media_provider.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'package:mime/mime.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserMediaScreen extends StatefulWidget {
@@ -216,9 +213,7 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
         const snackBar = SnackBar(content: Text('File uploaded successfully'));
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } 
-
-      else {
+      } else {
         var snackBar = SnackBar(content: Text(responseBody['message']));
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
