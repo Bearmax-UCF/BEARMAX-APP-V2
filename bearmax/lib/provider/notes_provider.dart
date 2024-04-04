@@ -14,24 +14,17 @@ class NoteProvider extends ChangeNotifier {
   String get error => _error;
 
   Future<void> fetchAllNotes(BuildContext context) async {
-  try {
-    if(kDebugMode) {
-      print("PROVIDER");
+    try {
+      _isLoading = true;
+      notifyListeners();
+      _notes = await _apiService.allNotes(context);
+      notifyListeners();
+      _error = '';
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-    _isLoading = true;
-    notifyListeners();
-    _notes = await _apiService.allNotes(context);
-    if(kDebugMode){
-      print("HEREEEEEEE");
-      print(_notes);
-    }
-    notifyListeners();
-    _error = '';
-  } catch (e) {
-    _error = e.toString();
-  } finally {
-    _isLoading = false;
-    notifyListeners();
   }
-}
 }

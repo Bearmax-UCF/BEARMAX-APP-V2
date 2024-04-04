@@ -5,7 +5,7 @@ class AuthProvider extends ChangeNotifier {
   String _authToken = '';
   String get authToken => _authToken;
 
-  String _authID= '';
+  String _authID = '';
   String get authID => _authID;
 
   Future<void> setAuthID(String id) async {
@@ -20,7 +20,6 @@ class AuthProvider extends ChangeNotifier {
     _authID = prefs.getString('authID') ?? '';
     notifyListeners();
   }
-
 
   Future<void> setAuthToken(String token) async {
     _authToken = token;

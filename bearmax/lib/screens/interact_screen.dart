@@ -23,7 +23,8 @@ class _InteractScreenState extends State<InteractScreen> {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final authToken = Provider.of<AuthProvider>(context, listen: false).authToken;
+    final authToken =
+        Provider.of<AuthProvider>(context, listen: false).authToken;
     final userID = Provider.of<AuthProvider>(context, listen: false).authID;
 
     return Scaffold(
@@ -75,11 +76,14 @@ class _InteractScreenState extends State<InteractScreen> {
             Navigator.pop(context);
 
             // Call socket with video
-            if (Provider.of<MediaProvider>(context, listen: false).videoURL == '') {
-              const snackBar = SnackBar(content: Text('Please select valid .mp4 file in My Media'));
+            if (Provider.of<MediaProvider>(context, listen: false).videoURL ==
+                '') {
+              const snackBar = SnackBar(
+                  content: Text('Please select valid .mp4 file in My Media'));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
-              socket.sensoryOverload(Provider.of<MediaProvider>(context, listen: false).videoURL);
+              socket.sensoryOverload(
+                  Provider.of<MediaProvider>(context, listen: false).videoURL);
             }
           },
         ),
@@ -89,13 +93,16 @@ class _InteractScreenState extends State<InteractScreen> {
           onTap: () {
             // Handle option 2
             Navigator.pop(context);
-            
-            // Call socket stuff
-            if (Provider.of<MediaProvider>(context, listen: false).audioURL == '') {
-              const snackBar = SnackBar(content: Text('Please select valid .mp3 file in My Media'));
+
+            // Call socket with audio
+            if (Provider.of<MediaProvider>(context, listen: false).audioURL ==
+                '') {
+              const snackBar = SnackBar(
+                  content: Text('Please select valid .mp3 file in My Media'));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
-              socket.sensoryOverload(Provider.of<MediaProvider>(context, listen: false).audioURL);
+              socket.sensoryOverload(
+                  Provider.of<MediaProvider>(context, listen: false).audioURL);
             }
           },
         ),
@@ -109,7 +116,7 @@ class _InteractScreenState extends State<InteractScreen> {
     final buttonHeight = height * 0.13;
     return ElevatedButton(
         onPressed: () {
-          // Ask user if they want video or image
+          // Choose from video or image
           showModalBottomSheet(
             context: context,
             builder: (BuildContext context) {
@@ -154,12 +161,11 @@ class _InteractScreenState extends State<InteractScreen> {
             emotionGameisPlaying = !emotionGameisPlaying;
           });
 
-          // Figure out the socket connection
           if (emotionGameisPlaying) {
-            // needs to be started
+            // Start game
             socket.startEmotionGame();
           } else {
-            // Stop and disconnect
+            // Stop and disconnect game
             socket.stopEmotionGame();
             socket.disconnect();
           }
@@ -219,9 +225,7 @@ class _InteractScreenState extends State<InteractScreen> {
             child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(children: <Widget>[
-                  //const SizedBox(height: 10),
                   displayPicture(),
-                  //const SizedBox(height: 20),
                   Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

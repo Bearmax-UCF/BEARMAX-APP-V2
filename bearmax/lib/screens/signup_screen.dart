@@ -160,7 +160,7 @@ class _SignupPageState extends State<SignupPage> {
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(
-                        30.0), // Adjust the value to change the roundness
+                        30.0),
                   ),
                 ),
                 fixedSize: MaterialStateProperty.all<Size>(const Size(300, 60)),

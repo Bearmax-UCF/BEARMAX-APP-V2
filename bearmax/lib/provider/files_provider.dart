@@ -15,16 +15,9 @@ class FileProvider extends ChangeNotifier {
 
   Future<void> fetchAllFiles(BuildContext context) async {
     try {
-      if (kDebugMode) {
-        print("PROVIDER");
-      }
       _isLoading = true;
       notifyListeners();
       _files = await _apiService.allFiles(context);
-      if (kDebugMode) {
-        print("HEREEEEEEE");
-        print(_files);
-      }
       notifyListeners();
       _error = '';
     } catch (e) {

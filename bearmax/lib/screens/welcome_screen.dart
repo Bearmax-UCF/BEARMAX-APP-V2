@@ -15,33 +15,10 @@ class WelcomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 150),
-
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/bearmax-panda-face-title.png', width: 330, height: 330),
-              ]
-            ),
-
-            /*
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset('assets/images/face.png', width: 300, height: 150),
-                const Positioned(
-                  top: 100,
-                  left: 60, 
-                  child: Text(
-                    'bearmax',
-                    style: TextStyle(
-                      fontFamily: 'Urbanist',
-                      fontSize: 45,
-                      color: Palette.secondaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),*/
+            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Image.asset('assets/images/bearmax-panda-face-title.png',
+                  width: 330, height: 330),
+            ]),
             const SizedBox(height: 130),
             ElevatedButton(
               onPressed: () {
@@ -55,8 +32,7 @@ class WelcomeScreen extends StatelessWidget {
                     MaterialStateProperty.all<Color>(Palette.backgroundColor),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        30.0), // Adjust the value to change the roundness
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 fixedSize: MaterialStateProperty.all<Size>(const Size(300, 60)),
@@ -82,8 +58,7 @@ class WelcomeScreen extends StatelessWidget {
                     MaterialStateProperty.all<Color>(Palette.accentColor),
                 shape: MaterialStateProperty.all<OutlinedBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        30.0), // Adjust the value to change the roundness
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
                 fixedSize: MaterialStateProperty.all<Size>(const Size(300, 60)),
