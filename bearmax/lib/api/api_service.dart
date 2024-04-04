@@ -65,10 +65,6 @@ class ApiService {
 
     String apiString = '${ApiEndPoints.editUser}$authID';
 
-    if (kDebugMode) {
-      print(apiString);
-    }
-
     final response = await http.patch(
       Uri.parse(apiString),
       headers: {
@@ -215,11 +211,6 @@ class ApiService {
     final response = await http.get(Uri.parse(apiString), headers: {
       'Authorization': 'Bearer $authToken',
     });
-
-    if (kDebugMode) {
-      print(response.statusCode);
-      print(response.body);
-    }
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body)['blobsList'];

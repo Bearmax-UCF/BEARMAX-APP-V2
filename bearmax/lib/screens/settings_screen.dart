@@ -56,7 +56,8 @@ class _SettingsScreen extends State<SettingsScreen> {
           content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text("Are you sure you want to delete your account? This action cannot be undone."),
+                Text(
+                    "Are you sure you want to delete your account? This action cannot be undone."),
               ],
             ),
           ),
@@ -67,7 +68,6 @@ class _SettingsScreen extends State<SettingsScreen> {
             ),
             TextButton(
               onPressed: () {
-
                 ApiService apiService = ApiService();
                 apiService.deleteUser(context).then((value) {
                   Map<String, dynamic> responseBody = json.decode(value.body);
@@ -78,27 +78,17 @@ class _SettingsScreen extends State<SettingsScreen> {
                     }
 
                     Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const WelcomeScreen()),
-                );
-
-                  } 
-                  
-                  else {
-                    var snackBar = const SnackBar(content: Text('Could not delete account.'));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WelcomeScreen()),
+                    );
+                  } else {
+                    var snackBar = const SnackBar(
+                        content: Text('Could not delete account.'));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   }
                 });
-
-                /*
-                Navigator.pop(context);
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const WelcomeScreen()),
-                );*/
               },
               child: const Text('OK', style: TextStyle(color: Palette.blue)),
             ),

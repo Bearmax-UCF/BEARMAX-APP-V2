@@ -17,7 +17,7 @@ class ViewNoteScreen extends StatefulWidget {
 }
 
 class _ViewNoteScreen extends State<ViewNoteScreen> {
-   TextEditingController titleController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
   TextEditingController bodyController = TextEditingController();
   bool isTitleChanged = false;
   bool isBodyChanged = false;
@@ -25,10 +25,10 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
   @override
   void initState() {
     super.initState();
-    titleController.text = widget.note.title; // Assign text directly
+    titleController.text = widget.note.title; 
     titleController.addListener(_onTitleChanged);
 
-    bodyController.text = widget.note.note; // Assign text directly
+    bodyController.text = widget.note.note; 
     bodyController.addListener(_onBodyChanged);
   }
 
@@ -104,11 +104,9 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
             }
             
             Map<String, dynamic> responseBody = json.decode(value.body);
-            //if(value.statusCode != 200) {
               var snackBar =
                         SnackBar(content: Text(responseBody['message']));
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //}
           });
         }
       },

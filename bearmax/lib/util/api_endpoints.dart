@@ -1,14 +1,11 @@
 class ApiEndPoints {
   static const String liveBaseUrl = 'https://bearmaxcare.com/';
-  static const String localBaseUrl = 'http://10.0.2.2:8080/';
-  static const String localHost = 'ws://10.0.2.2:8080';
   static const String socketUrl = 'wss://bearmaxcare.com';
 
   // Verification
   static const String register = '${liveBaseUrl}api/auth/register';
   static const String login = '${liveBaseUrl}api/auth/login';
   static const String forgotPassword = '${liveBaseUrl}api/auth/forgotPasswordRequest';
-  //static const String emailVerification = '${localBaseUrl}api/auth/verify?token=&id='; // 
 
   // User Information
   static const String userInfo = '${liveBaseUrl}api/users/me'; 
@@ -22,8 +19,4 @@ class ApiEndPoints {
   static const String uploadAudio = '${liveBaseUrl}api/uploadFiles/uploadAudio/';
   static const String uploadVideo = '${liveBaseUrl}api/uploadFiles/uploadVideo/';
   static const String getAllFiles =  '${liveBaseUrl}api/azureBlob/listBlobs/';
-  
-  //static const String azureBlob = '${localBaseUrl}api/azureBlob/getBlob/:id';
-  //static const String azureContainer = '${localBaseUrl}api/azureContainer/:id';
-  //static const String delEmotionRecognition = '${localBaseUrl}api/emotionRecognition/:id';
 }

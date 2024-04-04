@@ -97,15 +97,15 @@ class _NotesScreenState extends State<NotesScreen> {
                   color: Palette.backgroundColor,
                   border: Border(
                       left: BorderSide(
-                        color: Colors.grey, // specify your color here
-                        width: 0.5, // specify your width here
+                        color: Palette.grey,
+                        width: 0.5,
                       ),
                       right: BorderSide(
-                        color: Colors.grey, // specify your color here
-                        width: 0.5, // specify your width here
+                        color: Palette.grey,
+                        width: 0.5,
                       ),
                       bottom: BorderSide(
-                        color: Colors.grey,
+                        color: Palette.grey,
                         width: 1,
                       )),
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -139,13 +139,9 @@ class _NotesScreenState extends State<NotesScreen> {
       isScrollControlled: true,
       context: context,
       builder: (BuildContext c) {
-        
         return Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        child:  ViewNoteScreen(note: note));
-        
-       
-      
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: ViewNoteScreen(note: note));
       },
     );
   }
@@ -163,7 +159,7 @@ class _NotesScreenState extends State<NotesScreen> {
           foregroundColor: Palette.accentColorTwo,
           shadowColor: Palette.darkShadow,
           elevation: 6),
-      child: const Icon(Icons.add, size: 35.0, color: Colors.white),
+      child: const Icon(Icons.add, size: 35.0, color: Palette.backgroundColor),
     );
   }
 
@@ -182,7 +178,7 @@ class _NotesScreenState extends State<NotesScreen> {
               topRight: Radius.circular(25.0),
             ),
             child: AddNotesScreen(),
-          ), 
+          ),
         );
       },
     );

@@ -21,7 +21,6 @@ class MediaProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> setVideoURL(String videoURL) async {
     _videoURL = videoURL;
     notifyListeners();

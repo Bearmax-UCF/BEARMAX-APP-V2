@@ -3,7 +3,6 @@ import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/edit_profile_model.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/widgets/profile_picture_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -22,13 +21,10 @@ class _EditProfileScreen extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Edit Profile'),
       ),
-      
       body: Padding(
         padding: const EdgeInsets.only(left: 32, right: 32, top: 5, bottom: 5),
         child: Center(
@@ -70,10 +66,8 @@ class _EditProfileScreen extends State<EditProfileScreen> {
               password: passwordController.text);
           ApiService apiService = ApiService();
           apiService.editUser(editProfileRequest, context).then((value) {
-            
             Map<String, dynamic> responseBody = json.decode(value.body);
 
-          
             if (value.statusCode == 200) {
               const snackBar = SnackBar(content: Text("Successfully Changed"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -89,7 +83,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(
-                  30.0), // Adjust the value to change the roundness
+                  30.0), 
             ),
           ),
           fixedSize: MaterialStateProperty.all<Size>(const Size(290, 50)),
@@ -118,10 +112,6 @@ class _EditProfileScreen extends State<EditProfileScreen> {
           final userData = json.decode(snapshot.data.body);
           final newData = userData['me'][data];
 
-          if (kDebugMode) {
-            print(newData);
-          }
-
           if (!isPass) {
             return textField(label, newData, tec);
           } else {
@@ -140,39 +130,36 @@ class _EditProfileScreen extends State<EditProfileScreen> {
       ),
       const SizedBox(height: 8),
       SizedBox(
-         
-        height: 50,
-        child:
-      TextFormField(
-        obscureText: showPassword,
-        controller: passwordController,
-        
-        decoration: InputDecoration(
-          labelText: "Enter new password",
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              width: 2,
-              color: Palette.accentColor,
+          height: 50,
+          child: TextFormField(
+            obscureText: showPassword,
+            controller: passwordController,
+            decoration: InputDecoration(
+              labelText: "Enter new password",
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  width: 2,
+                  color: Palette.accentColor,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    showPassword = !showPassword;
+                  });
+                },
+                color: Palette.accentColor,
+                icon: Icon(
+                    showPassword ? Icons.visibility_off : Icons.visibility),
+              ),
+              isDense: true,
             ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          suffixIcon: IconButton(
-            onPressed: () {
-              setState(() {
-                showPassword = !showPassword;
-              });
-            },
-            color: Palette.accentColor,
-            icon: Icon(showPassword ? Icons.visibility_off : Icons.visibility),
-          ),
-          isDense: true,
-        ),
-      )
-    ),
+          )),
     ]);
   }
 
@@ -184,27 +171,26 @@ class _EditProfileScreen extends State<EditProfileScreen> {
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
       const SizedBox(height: 8),
-
-      SizedBox(height: 50,
-        child:
-      TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: hint.toString(),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-              width: 2,
-              color: Palette.accentColor,
+      SizedBox(
+          height: 50,
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: hint.toString(),
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  width: 2,
+                  color: Palette.accentColor,
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              isDense: true,
             ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          isDense: true,
-        ),
-      )),
+          )),
     ]);
   }
 }
