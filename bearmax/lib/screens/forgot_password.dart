@@ -62,6 +62,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                     ]))));
   }
 
+  // Email text forrm
   Widget emailTextEntry() {
     return SizedBox(
       width: 330,
@@ -88,6 +89,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
     );
   }
 
+  // Return to login screen
   Widget signupNavigator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -111,6 +113,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
     );
   }
 
+  // Reset password button
   Widget resetButton() {
     return ElevatedButton(
       onPressed: () {

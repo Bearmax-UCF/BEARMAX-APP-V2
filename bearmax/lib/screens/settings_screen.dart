@@ -46,6 +46,7 @@ class _SettingsScreen extends State<SettingsScreen> {
     );
   }
 
+  // Delete account alet
   Future<void> deleteAlert(BuildContext context) async {
     return showDialog<void>(
       context: context,

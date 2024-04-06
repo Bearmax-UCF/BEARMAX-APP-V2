@@ -175,6 +175,7 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
             ]));
   }
 
+  // Add file button
   Widget addMedia(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
@@ -192,8 +193,8 @@ class _UserMediaScreenState extends State<UserMediaScreen> {
     );
   }
 
+  // Choose audio or video file
   void pickFile(BuildContext context) async {
-    // Choose audio or video file
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['mp3', 'mp4'],

@@ -139,9 +139,9 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
     );
   }
 
+  // Title field
   Widget titleField(Note note) {
     return TextFormField(
-      //initialValue: widget.note.title,
       controller: titleController,
       style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
       decoration: const InputDecoration(
