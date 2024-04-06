@@ -8,7 +8,7 @@ import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 class HomePage extends StatelessWidget {
   
   final PersistentTabController _controller =
-      PersistentTabController(initialIndex: 0);
+      PersistentTabController(initialIndex: 1);
 
   HomePage({super.key});
 

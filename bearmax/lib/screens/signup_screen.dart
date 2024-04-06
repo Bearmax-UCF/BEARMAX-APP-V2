@@ -35,144 +35,33 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: SingleChildScrollView(
+            child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 75),
-            const Text("Create account",
-                style: TextStyle(
-                    color: Palette.accentColorTwo,
-                    fontSize: 42,
-                    fontFamily: 'Roboto')),
+            header(),
             const SizedBox(height: 35),
             SizedBox(
               width: 330,
               child: Column(
                 children: [
-                  TextFormField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                        hintText: "Email",
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 2, color: Palette.accentColor),
-                        ),
-                        prefixIcon: Icon(Icons.email)),
-                  ),
+                  textFormField("Email", emailController, Icons.email, false),
                   const SizedBox(height: 18),
-                  TextFormField(
-                    controller: firstNameController,
-                    decoration: const InputDecoration(
-                        hintText: "First Name",
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 2, color: Palette.accentColor),
-                        ),
-                        prefixIcon: Icon(Icons.person)),
-                  ),
+                  textFormField(
+                      "First Name", firstNameController, Icons.person, false),
                   const SizedBox(height: 20),
-                  TextFormField(
-                    controller: lastNameController,
-                    decoration: const InputDecoration(
-                        hintText: "Last Name",
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 2, color: Palette.accentColor),
-                        ),
-                        prefixIcon: Icon(Icons.person)),
-                  ),
+                  textFormField(
+                      "Last Name", lastNameController, Icons.person, false),
                   const SizedBox(height: 18),
-                  TextFormField(
-                    controller: passwordController,
-                    obscureText: hidePassword,
-                    decoration: InputDecoration(
-                        hintText: "Password",
-                        enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.grey,
-                          ),
-                        ),
-                        focusedBorder: const UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(width: 2, color: Palette.accentColor),
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              hidePassword = !hidePassword;
-                            });
-                          },
-                          color: Palette.accentColor,
-                          icon: Icon(hidePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                        ),
-                        prefixIcon: const Icon(Icons.lock)),
-                  ),
+                  textFormField(
+                      "Password", passwordController, Icons.lock, true),
                   const SizedBox(height: 32),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                SignupRequest signupRequest = SignupRequest(
-                    email: emailController.text,
-                    firstName: firstNameController.text,
-                    lastName: lastNameController.text,
-                    password: passwordController.text);
-                ApiService apiService = ApiService();
-                apiService.signup(signupRequest).then((value) {
-                  if (value.statusCode == 201) {
-                    const snackBar =
-                        SnackBar(content: Text("Successfully Created Account"));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else if (value.statusCode == 422) {
-                    const snackBar = SnackBar(
-                        content: Text(
-                            'Another User with this email already exists!'));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else {
-                    const snackBar =
-                        SnackBar(content: Text('Missing one or more fields.'));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
-                });
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Palette.accentColor),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                        30.0),
-                  ),
-                ),
-                fixedSize: MaterialStateProperty.all<Size>(const Size(300, 60)),
-              ),
-              child: const Text(
-                'SIGN UP',
-                style: TextStyle(
-                    color: Palette.backgroundColor,
-                    fontSize: 20,
-                    fontFamily: 'Roboto'),
-              ),
-            ),
+            signupButton(),
             isSignedUp
                 ? Container(
                     width: double.infinity,
@@ -185,24 +74,111 @@ class _SignupPageState extends State<SignupPage> {
                   )
                 : Container(),
             const SizedBox(height: 10),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Text("Already have an account?"),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
-                },
-                child: const Text(
-                  'Login here',
-                  style: TextStyle(color: Palette.accentColor),
-                ),
-              ),
-            ])
+            toLogin(),
           ],
-        ),
+        )),
       ),
     );
+  }
+
+  // Header text
+  Widget header() {
+    return const Text("Create account",
+        style: TextStyle(
+            color: Palette.accentColorTwo, fontSize: 42, fontFamily: 'Roboto'));
+  }
+
+  // Text form fields
+  Widget textFormField(String text, TextEditingController controller,
+      IconData icon, bool isPassword) {
+    return TextFormField(
+      controller: controller,
+      obscureText: isPassword ? hidePassword : false,
+      decoration: InputDecoration(
+          hintText: text,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
+          ),
+          focusedBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(width: 2, color: Palette.accentColor),
+          ),
+          suffixIcon: isPassword
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      hidePassword = !hidePassword;
+                    });
+                  },
+                  color: Palette.accentColor,
+                  icon: Icon(
+                      hidePassword ? Icons.visibility_off : Icons.visibility),
+                )
+              : null,
+          prefixIcon: Icon(icon)),
+    );
+  }
+
+  // Press to signup
+  Widget signupButton() {
+    return ElevatedButton(
+      onPressed: () {
+        SignupRequest signupRequest = SignupRequest(
+            email: emailController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            password: passwordController.text);
+        ApiService apiService = ApiService();
+        apiService.signup(signupRequest).then((value) {
+          if (value.statusCode == 201) {
+            const snackBar =
+                SnackBar(content: Text("Successfully Created Account"));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          } else if (value.statusCode == 422) {
+            const snackBar = SnackBar(
+                content: Text('Another User with this email already exists!'));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          } else {
+            const snackBar =
+                SnackBar(content: Text('Missing one or more fields.'));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        });
+      },
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all<Color>(Palette.accentColor),
+        shape: MaterialStateProperty.all<OutlinedBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        fixedSize: MaterialStateProperty.all<Size>(const Size(300, 60)),
+      ),
+      child: const Text(
+        'SIGN UP',
+        style: TextStyle(
+            color: Palette.backgroundColor, fontSize: 20, fontFamily: 'Roboto'),
+      ),
+    );
+  }
+
+  // Go to login screen if already has an account
+  Widget toLogin() {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      const Text("Already have an account?"),
+      TextButton(
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        },
+        child: const Text(
+          'Login here',
+          style: TextStyle(color: Palette.accentColor),
+        ),
+      ),
+    ]);
   }
 }

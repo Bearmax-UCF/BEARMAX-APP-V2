@@ -56,6 +56,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
     );
   }
 
+  // Submit button
   Widget submit() {
     return ElevatedButton(
         onPressed: () {
@@ -97,6 +98,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
         ));
   }
 
+  // Text form field logic
   Widget textForm(
       String label, String data, TextEditingController tec, bool isPass) {
     return FutureBuilder(
@@ -122,6 +124,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
     );
   }
 
+  // Password text field
   Widget passwordField() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       const Text(
@@ -163,6 +166,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
     ]);
   }
 
+  // Regular text fields
   Widget textField(
       String label, String hint, TextEditingController controller) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
