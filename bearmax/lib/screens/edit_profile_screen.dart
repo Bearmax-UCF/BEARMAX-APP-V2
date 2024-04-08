@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/edit_profile_model.dart';
+import 'package:bearmax/provider/user_provider.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/widgets/profile_picture_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -70,6 +72,23 @@ class _EditProfileScreen extends State<EditProfileScreen> {
             Map<String, dynamic> responseBody = json.decode(value.body);
 
             if (value.statusCode == 200) {
+              // Update first name, last name, and/or email if necessary
+              final userProvider =
+                  Provider.of<UserProvider>(context, listen: false);
+
+              if (firstNameController.text != '') {
+                userProvider.updateFirstName(firstNameController.text);
+              }
+
+              if (lastNameController.text != '') {
+                userProvider.updateLastName(lastNameController.text);
+              }
+
+              if (emailController.text != '') {
+                userProvider.updateEmail(emailController.text);
+              }
+
+              // Display snackbar
               const snackBar = SnackBar(content: Text("Successfully Changed"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
@@ -83,8 +102,7 @@ class _EditProfileScreen extends State<EditProfileScreen> {
               MaterialStateProperty.all<Color>(Palette.accentColor),
           shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                  30.0), 
+              borderRadius: BorderRadius.circular(30.0),
             ),
           ),
           fixedSize: MaterialStateProperty.all<Size>(const Size(290, 50)),

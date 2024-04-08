@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:bearmax/api/api_service.dart';
+import 'package:bearmax/provider/user_provider.dart';
 import 'package:bearmax/screens/edit_profile_screen.dart';
 import 'package:bearmax/screens/settings_screen.dart';
 import 'package:bearmax/screens/user_media.dart';
@@ -7,6 +6,7 @@ import 'package:bearmax/screens/welcome_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:bearmax/widgets/profile_picture_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -34,8 +34,8 @@ class _ProfileScreen extends State<ProfileScreen> {
                 onClicked: () async {},
               ),
               const SizedBox(height: 10),
-              nameDisplay(),
-              emailDisplay(),
+              nameDisplay(context),
+              emailDisplay(context),
               const SizedBox(height: 45),
               const Divider(
                 color: Palette.grey,
@@ -75,25 +75,16 @@ class _ProfileScreen extends State<ProfileScreen> {
   }
 
   // Display full name
-  Widget nameDisplay() {
-    return FutureBuilder(
-      future: ApiService.getUser(context),
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData) {
-          return const Center(child: Text('No data available'));
-        } else {
-          final userData = json.decode(snapshot.data.body);
-          final firstName = userData['me']['firstName'];
-          final lastName = userData['me']['lastName'];
-          final fullName = '$firstName $lastName';
-          return Column(
+  Widget nameDisplay(BuildContext context) {
+    return Consumer<UserProvider>(
+      builder: (context, userProvider, _) {
+        final firstName = userProvider.firstName;
+        final lastName = userProvider.lastName;
+
+         return Column(
             children: <Widget>[
               Text(
-                fullName,
+                '$firstName $lastName',
                 style: const TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 20,
@@ -102,29 +93,20 @@ class _ProfileScreen extends State<ProfileScreen> {
               ),
             ],
           );
-        }
       },
     );
   }
-
+  
   // Display email
-  Widget emailDisplay() {
-    return FutureBuilder(
-      future: ApiService.getUser(context),
-      builder: (context, AsyncSnapshot snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData) {
-          return const Center(child: Text('No data available'));
-        } else {
-          final userData = json.decode(snapshot.data.body);
+  Widget emailDisplay(BuildContext context) {
+    return Consumer<UserProvider>(
+      builder: (context, userProvider, _) {
+        final email = userProvider.email;
 
-          return Column(
+         return Column(
             children: <Widget>[
               Text(
-                userData['me']['email'],
+                email,
                 style: const TextStyle(
                   fontFamily: 'Roboto',
                   fontSize: 16,
@@ -133,11 +115,10 @@ class _ProfileScreen extends State<ProfileScreen> {
               ),
             ],
           );
-        }
       },
     );
   }
-
+  
   // Profile screen navigation buttons
   Widget button(
       String title, bool isLogout, IconData icon, VoidCallback onPressed) {

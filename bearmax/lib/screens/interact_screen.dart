@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:bearmax/api/socket_service.dart';
 import 'package:bearmax/provider/auth_provider.dart';
 import 'package:bearmax/provider/media_provider.dart';
+import 'package:bearmax/provider/user_provider.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:bearmax/api/api_service.dart';
 import 'package:provider/provider.dart';
 
 class InteractScreen extends StatefulWidget {
@@ -24,8 +22,8 @@ class _InteractScreenState extends State<InteractScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final authToken =
-        Provider.of<AuthProvider>(context, listen: false).authToken;
-    final userID = Provider.of<AuthProvider>(context, listen: false).authID;
+        Provider.of<AuthProvider>(context, listen: true).authToken;
+    final userID = Provider.of<AuthProvider>(context, listen: true).authID;
 
     return Scaffold(
       body: Container(
@@ -243,30 +241,25 @@ class _InteractScreenState extends State<InteractScreen> {
             fontFamily: 'Roboto', fontSize: 18, color: Palette.secondaryColor));
   }
 
-  // Display welcome message
-  Widget displayWelcome(BuildContext build) {
-    return FutureBuilder(
-        future: ApiService.getUser(context),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error:  ${snapshot.error}'));
-          } else if (!snapshot.hasData) {
-            return const Center(child: Text('No data available'));
-          } else {
-            final userData = json.decode(snapshot.data.body);
-            final firstName = userData['me']['firstName'];
-            return Column(children: <Widget>[
-              Text(
-                "Hello, $firstName",
-                style: const TextStyle(
-                    fontFamily: 'Roboto',
-                    fontSize: 40,
-                    color: Palette.secondaryColor),
-              )
-            ]);
-          }
-        });
+  // Display and update welcome message
+  Widget displayWelcome(BuildContext context) {
+    return Consumer<UserProvider>(
+      builder: (context, userProvider, _) {
+        final firstName = userProvider.firstName;
+
+        return Column(
+          children: <Widget>[
+            Text(
+              "Hello, $firstName",
+              style: const TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 40,
+                color: Palette.secondaryColor,
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
 }
