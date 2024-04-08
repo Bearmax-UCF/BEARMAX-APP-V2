@@ -16,50 +16,34 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
+  // final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _refreshIndicatorKey.currentState?.show();
-    });
+    // Fetch notes when the screen is initialized
+    Provider.of<NoteProvider>(context, listen: false).fetchAllNotes(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text('Notes'),
       ),
       body: Stack(children: [
-        RefreshIndicator(
-          onRefresh: () async {
-            await Provider.of<NoteProvider>(context, listen: false)
-                .fetchAllNotes(context);
+        Consumer<NoteProvider>(
+          builder: (context, noteProvider, child) {
+            return ListView.builder(
+              itemCount: noteProvider.notes.length,
+              itemBuilder: (context, index) {
+                Note note = noteProvider.notes[index];
+                return singleNote(note);
+              },
+            );
           },
-          child: Consumer<NoteProvider>(
-            builder: (context, noteProvider, child) {
-              if (noteProvider.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (noteProvider.error.isNotEmpty) {
-                return Center(
-                  child: Text(noteProvider.error),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: noteProvider.notes.length,
-                  itemBuilder: (context, index) {
-                    Note note = noteProvider.notes[index];
-                    return singleNote(note);
-                  },
-                );
-              }
-            },
-          ),
         ),
         Positioned(
           bottom: 30,

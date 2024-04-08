@@ -153,7 +153,7 @@ class _LoginPage extends State<LoginPage> {
 
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const HomePage(initialIndex: 1)),
             );
 
             if (kDebugMode) {
