@@ -1,6 +1,10 @@
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/new_note_model.dart';
+import 'package:bearmax/model/notes_model.dart';
+import 'package:bearmax/screens/home_screen.dart';
+import 'package:bearmax/screens/notes_screen.dart';
 import 'package:bearmax/util/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AddNotesScreen extends StatefulWidget {
@@ -75,7 +79,14 @@ class _AddNotesScreen extends State<AddNotesScreen> {
     ApiService apiService = ApiService();
     apiService.addNote(newNoteRequest, context).then((value) {
       if (value.statusCode == 200) {
+        if (kDebugMode) {
+          print("success");
+        }
         Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const NotesScreen()),
+        );
       } else {
         const snackBar = SnackBar(content: Text('Missing one or more fields'));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);

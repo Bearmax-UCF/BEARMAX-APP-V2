@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/notes_model.dart';
 import 'package:bearmax/screens/home_screen.dart';
+import 'package:bearmax/screens/notes_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +26,10 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
   @override
   void initState() {
     super.initState();
-    titleController.text = widget.note.title; 
+    titleController.text = widget.note.title;
     titleController.addListener(_onTitleChanged);
 
-    bodyController.text = widget.note.note; 
+    bodyController.text = widget.note.note;
     bodyController.addListener(_onBodyChanged);
   }
 
@@ -71,46 +72,56 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
         ),
         body: Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-            child: Stack(children: [Column(children: [
-              formattedDate(note),
-              const SizedBox(height: 5),
-              titleField(note),
-              const SizedBox(height: 5),
-              bodyField(note),
-            ]),
-            Positioned(
-          bottom: 30,
-          right: 20,
-          child: editNoteButton(titleController, bodyController, isTitleChanged, isBodyChanged, note),
-        ),
+            child: Stack(children: [
+              Column(children: [
+                formattedDate(note),
+                const SizedBox(height: 5),
+                titleField(note),
+                const SizedBox(height: 5),
+                bodyField(note),
+              ]),
+              Positioned(
+                bottom: 30,
+                right: 20,
+                child: editNoteButton(titleController, bodyController,
+                    isTitleChanged, isBodyChanged, note),
+              ),
             ])));
   }
 
   // Save button
-  Widget editNoteButton(TextEditingController titleController, TextEditingController bodyController, bool isTitleChanged, bool isBodyChanged, Note note) {
+  Widget editNoteButton(
+      TextEditingController titleController,
+      TextEditingController bodyController,
+      bool isTitleChanged,
+      bool isBodyChanged,
+      Note note) {
     return ElevatedButton(
       onPressed: () {
-        if (isTitleChanged || isBodyChanged)  {
-          EditNoteRequest editNoteRequest = EditNoteRequest(title: titleController.text, note: bodyController.text);
+        if (isTitleChanged || isBodyChanged) {
+          EditNoteRequest editNoteRequest = EditNoteRequest(
+              title: titleController.text, note: bodyController.text);
           ApiService apiService = ApiService();
 
           apiService.editNote(editNoteRequest, context, note.id).then((value) {
-            
             if (kDebugMode) {
+              print(note.id);
               print(titleController.text);
-              print(isTitleChanged);
               print(bodyController.text);
-              print(isBodyChanged);
             }
-            
-            Map<String, dynamic> responseBody = json.decode(value.body);
-              var snackBar =
-                        SnackBar(content: Text(responseBody['message']));
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotesScreen()),
+            );
           });
+        } else {
+          const snackBar =
+              SnackBar(content: Text('Missing at least one field'));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
-
       style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
           padding: const EdgeInsets.all(10),
@@ -118,7 +129,8 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
           foregroundColor: Palette.accentColorTwo,
           shadowColor: Palette.darkShadow,
           elevation: 6),
-      child: const Icon(Icons.save_as_outlined, size: 35.0, color: Colors.white),
+      child:
+          const Icon(Icons.save_as_outlined, size: 35.0, color: Colors.white),
     );
   }
 
@@ -127,14 +139,14 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
     return TextFormField(
       controller: bodyController,
       keyboardType: TextInputType.multiline,
-            maxLines: null,
-            decoration: const InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 0, color: Colors.transparent),
-              ),
-              enabledBorder: InputBorder.none,
-              disabledBorder: InputBorder.none,
-              isDense: true,
+      maxLines: null,
+      decoration: const InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 0, color: Colors.transparent),
+        ),
+        enabledBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
+        isDense: true,
       ),
     );
   }
@@ -202,7 +214,9 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
 
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const HomePage(initialIndex: 0)),
                       (Route<dynamic> route) => false,
                     );
                   } else {
