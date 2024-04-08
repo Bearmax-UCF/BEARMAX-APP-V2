@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/provider/auth_provider.dart';
 import 'package:bearmax/model/login_model.dart';
+import 'package:bearmax/provider/user_provider.dart';
 import 'package:bearmax/screens/forgot_password.dart';
 import 'package:bearmax/screens/home_screen.dart';
 import 'package:bearmax/screens/signup_screen.dart';
@@ -149,6 +150,7 @@ class _LoginPage extends State<LoginPage> {
                 .setAuthToken(responseBody['token']);
             Provider.of<AuthProvider>(context, listen: false)
                 .setAuthID(responseBody['id']);
+
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => HomePage()),
