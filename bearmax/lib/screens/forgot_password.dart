@@ -127,11 +127,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
             print(value.statusCode);
           }
           if (value.statusCode == 201) {
-            CoolAlert.show(
-              context: context,
-              type: CoolAlertType.success,
-              text: "Password reset successfully sent to email.",
-            );
+            showResetPasswordDialog(context);
           } else {
             var snackBar = SnackBar(content: Text(responseBody['message']));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -154,4 +150,29 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
       ),
     );
   }
+
+  // Reset widget
+  void showResetPasswordDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Success"),
+        content: const Text("Please check your email to reset your password."),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); 
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
+            },
+            child: const Text("Okay", style: TextStyle(color: Palette.accentColor)),
+          ),
+        ],
+      );
+    },
+  );
+}
 }
