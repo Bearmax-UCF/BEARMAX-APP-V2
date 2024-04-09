@@ -51,6 +51,41 @@ class SocketService {
   }
 
   // Play sensory overload
+  /*
+  void sensoryOverload(String url, bool video, bool audio) {
+    Map<String, dynamic> sensoryOverloadData = {
+      "mediaURL": url,
+      "boolVideo": audio,
+      "boolAudio": video,
+      "userId": userID
+    };
+
+    socket.emit('playMedia', json.encode(sensoryOverloadData));
+
+    if (kDebugMode) {
+      print("Playing: $url");
+    }
+  }
+
+
+void sensoryOverload(String url, bool video, bool audio) {
+    Map<String, dynamic> sensoryOverloadData = {
+      "mediaURL": url,
+    };
+
+    Map<String, dynamic> eventData = {
+    "userID": userId,
+    };
+
+    socket.emit('playMedia', json.encode([sensoryOverloadData, video,  audio, eventData]));
+
+    if (kDebugMode) {
+      print("Playing: $url");
+    }
+  }
+*/
+
+  
   void sensoryOverload(String url) {
     Map<String, dynamic> sensoryOverloadData = {
       "mediaURL": url,

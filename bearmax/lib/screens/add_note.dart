@@ -1,7 +1,7 @@
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/new_note_model.dart';
 import 'package:bearmax/model/notes_model.dart';
-import 'package:bearmax/screens/home_screen.dart';
+import 'package:bearmax/screens/notes_screen.dart';
 import 'package:bearmax/screens/notes_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/foundation.dart';

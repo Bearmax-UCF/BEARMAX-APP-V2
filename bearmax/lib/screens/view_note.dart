@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/notes_model.dart';
