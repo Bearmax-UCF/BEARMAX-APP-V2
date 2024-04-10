@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bearmax/util/api_endpoints.dart';
 import 'package:flutter/foundation.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
@@ -10,13 +8,15 @@ class SocketService {
   final String userID;
 
   SocketService(this.authToken, this.userID) {
-    final fullURL = "${ApiEndPoints.socketUrl}?userID=$userID";
+    const fullURL = ApiEndPoints.socketUrl;
+    final Map<String, String> query = {'userID': userID};
     socket = io.io(
         fullURL,
         io.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
             .setAuth({'Authorization': 'Bearer $authToken'})
+            .setQuery(query)
             .build());
 
     // Connect and check connection
@@ -50,51 +50,15 @@ class SocketService {
     socket.emit('emotionGame', 'stop');
   }
 
-  // Play sensory overload
-  /*
-  void sensoryOverload(String url, bool video, bool audio) {
-    Map<String, dynamic> sensoryOverloadData = {
-      "mediaURL": url,
-      "boolVideo": audio,
-      "boolAudio": video,
-      "userId": userID
-    };
+// Play sensory overload
+void sensoryOverload(String name, bool video, bool audio) {
 
-    socket.emit('playMedia', json.encode(sensoryOverloadData));
+    String map = '{"mediaName": "$name","videoBool": $video,"audioBool": $audio}';
+
+    socket.emit('playMedia', map);
 
     if (kDebugMode) {
-      print("Playing: $url");
-    }
-  }
-
-
-void sensoryOverload(String url, bool video, bool audio) {
-    Map<String, dynamic> sensoryOverloadData = {
-      "mediaURL": url,
-    };
-
-    Map<String, dynamic> eventData = {
-    "userID": userId,
-    };
-
-    socket.emit('playMedia', json.encode([sensoryOverloadData, video,  audio, eventData]));
-
-    if (kDebugMode) {
-      print("Playing: $url");
-    }
-  }
-*/
-
-  
-  void sensoryOverload(String url) {
-    Map<String, dynamic> sensoryOverloadData = {
-      "mediaURL": url,
-    };
-
-    socket.emit('playMedia', json.encode(sensoryOverloadData));
-
-    if (kDebugMode) {
-      print("Playing: $url");
+      print("Playing: $name");
     }
   }
 
