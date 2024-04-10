@@ -81,7 +81,7 @@ class _InteractScreenState extends State<InteractScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               socket.sensoryOverload(
-                  Provider.of<MediaProvider>(context, listen: false).videoURL);
+                  Provider.of<MediaProvider>(context, listen: false).videoURL, true, false);
             }
           },
         ),
@@ -100,7 +100,7 @@ class _InteractScreenState extends State<InteractScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               socket.sensoryOverload(
-                  Provider.of<MediaProvider>(context, listen: false).audioURL);
+                  Provider.of<MediaProvider>(context, listen: false).audioURL, false, true);
             }
           },
         ),
