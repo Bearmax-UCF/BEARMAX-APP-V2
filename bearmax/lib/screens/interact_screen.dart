@@ -81,7 +81,9 @@ class _InteractScreenState extends State<InteractScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               socket.sensoryOverload(
-                  Provider.of<MediaProvider>(context, listen: false).videoURL, true, false);
+                  Provider.of<MediaProvider>(context, listen: false).videoURL,
+                  true,
+                  false);
             }
           },
         ),
@@ -100,7 +102,9 @@ class _InteractScreenState extends State<InteractScreen> {
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               socket.sensoryOverload(
-                  Provider.of<MediaProvider>(context, listen: false).audioURL, false, true);
+                  Provider.of<MediaProvider>(context, listen: false).audioURL,
+                  false,
+                  true);
             }
           },
         ),
@@ -147,6 +151,55 @@ class _InteractScreenState extends State<InteractScreen> {
             ]));
   }
 
+  Widget emotionTile(String emotion, IconData icon, VoidCallback onPressed) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(emotion),
+      onTap: onPressed,
+    );
+  }
+
+  // happy, sad, angry, confused, shocked, worried, scared, annoyed
+  Widget emotionGameMenu(SocketService socket) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        emotionTile('Happy', Icons.sentiment_satisfied_alt, () {
+          Navigator.pop(context);
+          socket.emotion('happy');
+        }),
+        emotionTile('Sad', Icons.sentiment_dissatisfied_rounded, () {
+          Navigator.pop(context);
+          socket.emotion('sad');
+        }),
+        emotionTile('Angry', Icons.sentiment_very_dissatisfied_sharp, () {
+          Navigator.pop(context);
+          socket.emotion('angry');
+        }),
+        emotionTile('Confused', Icons.question_mark, () {
+          Navigator.pop(context);
+          socket.emotion('confused');
+        }),
+        emotionTile('Shocked', Icons.error_outline, () {
+          Navigator.pop(context);
+          socket.emotion('shocked');
+        }),
+        emotionTile('Worried', Icons.sentiment_dissatisfied, () {
+          Navigator.pop(context);
+          socket.emotion('worried');
+        }),
+        emotionTile('Scared', Icons.warning, () {
+          Navigator.pop(context);
+          socket.emotion('scared');
+        }),
+        emotionTile('Annoyed', Icons.sentiment_neutral_outlined, () {
+          Navigator.pop(context);
+          socket.emotion('annoyed');
+        })
+      ],
+    );
+  }
+
   //  Display emotion game button
   Widget emotionGameButton(height, width, authToken, socket) {
     final buttonWidth = width * 0.65;
@@ -154,6 +207,20 @@ class _InteractScreenState extends State<InteractScreen> {
 
     return ElevatedButton(
         onPressed: () {
+          // Bring up poses tab
+          showModalBottomSheet(
+            isDismissible: true,
+            isScrollControlled: true,
+            context: context,
+            builder: (BuildContext c) {
+              return Padding(
+                  padding:
+                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                  child: emotionGameMenu(socket));
+            },
+          );
+
+          /*
           // start or stop
           setState(() {
             emotionGameisPlaying = !emotionGameisPlaying;
@@ -166,7 +233,7 @@ class _InteractScreenState extends State<InteractScreen> {
             // Stop and disconnect game
             socket.stopEmotionGame();
             socket.disconnect();
-          }
+          }*/
         },
         style: ButtonStyle(
           backgroundColor: emotionGameisPlaying
@@ -180,19 +247,24 @@ class _InteractScreenState extends State<InteractScreen> {
           fixedSize:
               MaterialStateProperty.all<Size>(Size(buttonWidth, buttonHeight)),
         ),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              /*
           Icon(
               emotionGameisPlaying ? Icons.stop : Icons.emoji_emotions_outlined,
-              color: Palette.backgroundColor),
-          const SizedBox(height: 5),
-          Text(
-              textAlign: TextAlign.center,
-              emotionGameisPlaying ? 'End Game' : 'Emotion Game',
-              style: const TextStyle(
-                color: Palette.backgroundColor,
-                fontSize: 18,
-              ))
-        ]));
+              color: Palette.backgroundColor),*/
+              Icon(Icons.accessibility_new, color: Palette.backgroundColor),
+              SizedBox(height: 5),
+              Text(
+                  textAlign: TextAlign.center,
+                  // emotionGameisPlaying ? 'End Game' : 'Emotion Game',
+                  "Match the Pose",
+                  style: TextStyle(
+                    color: Palette.backgroundColor,
+                    fontSize: 18,
+                  ))
+            ]));
   }
 
   // Display bear picture
