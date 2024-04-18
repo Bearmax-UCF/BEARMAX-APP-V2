@@ -21,6 +21,11 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
+    final EdgeInsets padding = EdgeInsets.symmetric(
+      horizontal: screenSize.width * 0.05,
+    );
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,30 +39,34 @@ class _SignupPageState extends State<SignupPage> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
+        padding: padding,
+        child: Center(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 75),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.08,
+            ),
             header(),
             const SizedBox(height: 35),
             SizedBox(
               width: 330,
-              child: Column(
-                children: [
-                  textFormField("Email", emailController, Icons.email, false),
-                  const SizedBox(height: 18),
-                  textFormField(
-                      "First Name", firstNameController, Icons.person, false),
-                  const SizedBox(height: 20),
-                  textFormField(
-                      "Last Name", lastNameController, Icons.person, false),
-                  const SizedBox(height: 18),
-                  textFormField(
-                      "Password", passwordController, Icons.lock, true),
-                  const SizedBox(height: 32),
-                ],
+              child: Center(
+                child: Column(
+                  children: [
+                    textFormField("Email", emailController, Icons.email, false),
+                    const SizedBox(height: 18),
+                    textFormField(
+                        "First Name", firstNameController, Icons.person, false),
+                    const SizedBox(height: 20),
+                    textFormField(
+                        "Last Name", lastNameController, Icons.person, false),
+                    const SizedBox(height: 18),
+                    textFormField(
+                        "Password", passwordController, Icons.lock, true),
+                    const SizedBox(height: 32),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),

@@ -9,29 +9,27 @@ class GetUserResponse {
   final String hashToken;
   final int version;
 
-  GetUserResponse({
-    required this.userID,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.password,
-    required this.isVerified,
-    required this.oldPassswords,
-    required this.hashToken,
-    required this.version
-  });
+  GetUserResponse(
+      {required this.userID,
+      required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.password,
+      required this.isVerified,
+      required this.oldPassswords,
+      required this.hashToken,
+      required this.version});
 
   factory GetUserResponse.fromJson(Map<String, dynamic> json) {
     return GetUserResponse(
-      userID: json["_id"], 
-      firstName: json["firstName"], 
-      lastName: json["lastName"], 
-      email: json["email"], 
-      password: json["password"], 
-      isVerified: json["isVerified"], 
-      oldPassswords: json["oldPasswords"], 
-      hashToken: json["hashToken"], 
-      version: json["__v"]
-    );
+        userID: json["_id"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        email: json["email"],
+        password: json["password"],
+        isVerified: json["isVerified"],
+        oldPassswords: json["oldPasswords"],
+        hashToken: json["hashToken"],
+        version: json["__v"]);
   }
 }

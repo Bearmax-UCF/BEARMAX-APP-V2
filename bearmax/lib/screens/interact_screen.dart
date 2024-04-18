@@ -37,7 +37,12 @@ class _InteractScreenState extends State<InteractScreen> {
                 children: <Widget>[
                   const SizedBox(height: 80),
                   Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.05,
+                      bottom: MediaQuery.of(context).size.height * 0.05,
+                      left: MediaQuery.of(context).size.width * 0.1,
+                      right: MediaQuery.of(context).size.width * 0.1,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -52,7 +57,7 @@ class _InteractScreenState extends State<InteractScreen> {
               ),
             ),
             Positioned.fill(
-              top: MediaQuery.of(context).size.height * 0.3,
+              top: MediaQuery.of(context).size.height * 0.33,
               child: displayMain(height, width, authToken, userID),
             ),
           ],
@@ -219,21 +224,6 @@ class _InteractScreenState extends State<InteractScreen> {
                   child: emotionGameMenu(socket));
             },
           );
-
-          /*
-          // start or stop
-          setState(() {
-            emotionGameisPlaying = !emotionGameisPlaying;
-          });
-
-          if (emotionGameisPlaying) {
-            // Start game
-            socket.startEmotionGame();
-          } else {
-            // Stop and disconnect game
-            socket.stopEmotionGame();
-            socket.disconnect();
-          }*/
         },
         style: ButtonStyle(
           backgroundColor: emotionGameisPlaying
@@ -250,15 +240,10 @@ class _InteractScreenState extends State<InteractScreen> {
         child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              /*
-          Icon(
-              emotionGameisPlaying ? Icons.stop : Icons.emoji_emotions_outlined,
-              color: Palette.backgroundColor),*/
               Icon(Icons.accessibility_new, color: Palette.backgroundColor),
               SizedBox(height: 5),
               Text(
                   textAlign: TextAlign.center,
-                  // emotionGameisPlaying ? 'End Game' : 'Emotion Game',
                   "Match the Pose",
                   style: TextStyle(
                     color: Palette.backgroundColor,
@@ -293,7 +278,12 @@ class _InteractScreenState extends State<InteractScreen> {
                     topLeft: Radius.circular(60),
                     topRight: Radius.circular(60))),
             child: Padding(
-                padding: const EdgeInsets.all(30),
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.01,
+                  bottom: MediaQuery.of(context).size.height * 0.035,
+                  left: MediaQuery.of(context).size.width * 0.1,
+                  right: MediaQuery.of(context).size.width * 0.1,
+                ),
                 child: Column(children: <Widget>[
                   displayPicture(),
                   Column(

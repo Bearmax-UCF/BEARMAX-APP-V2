@@ -16,8 +16,6 @@ class NotesScreen extends StatefulWidget {
 }
 
 class _NotesScreenState extends State<NotesScreen> {
-  // final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey();
-
   @override
   void initState() {
     super.initState();
@@ -69,7 +67,10 @@ class _NotesScreenState extends State<NotesScreen> {
   // Single note card display
   Widget singleNote(Note note) {
     return Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25.0),
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.05,
+          right: MediaQuery.of(context).size.width * 0.05,
+        ),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,

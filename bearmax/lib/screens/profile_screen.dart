@@ -28,7 +28,7 @@ class _ProfileScreen extends State<ProfileScreen> {
           child: ListView(
             physics: const BouncingScrollPhysics(),
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               ProfilePicture(
                 image: 'assets/images/bearmax-panda-full-no-title.png',
                 onClicked: () async {},
@@ -81,44 +81,44 @@ class _ProfileScreen extends State<ProfileScreen> {
         final firstName = userProvider.firstName;
         final lastName = userProvider.lastName;
 
-         return Column(
-            children: <Widget>[
-              Text(
-                '$firstName $lastName',
-                style: const TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 20,
-                  color: Palette.black,
-                ),
+        return Column(
+          children: <Widget>[
+            Text(
+              '$firstName $lastName',
+              style: const TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 20,
+                color: Palette.black,
               ),
-            ],
-          );
+            ),
+          ],
+        );
       },
     );
   }
-  
+
   // Display email
   Widget emailDisplay(BuildContext context) {
     return Consumer<UserProvider>(
       builder: (context, userProvider, _) {
         final email = userProvider.email;
 
-         return Column(
-            children: <Widget>[
-              Text(
-                email,
-                style: const TextStyle(
-                  fontFamily: 'Roboto',
-                  fontSize: 16,
-                  color: Palette.accentColor,
-                ),
+        return Column(
+          children: <Widget>[
+            Text(
+              email,
+              style: const TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 16,
+                color: Palette.accentColor,
               ),
-            ],
-          );
+            ),
+          ],
+        );
       },
     );
   }
-  
+
   // Profile screen navigation buttons
   Widget button(
       String title, bool isLogout, IconData icon, VoidCallback onPressed) {
@@ -132,11 +132,15 @@ class _ProfileScreen extends State<ProfileScreen> {
         ),
         elevation: MaterialStateProperty.all(0),
         fixedSize: MaterialStateProperty.all<Size>(
-          const Size(120, 90),
+          Size((MediaQuery.of(context).size.width * 0.3),
+              (MediaQuery.of(context).size.width * 0.22)),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.05,
+          right: MediaQuery.of(context).size.width * 0.05,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

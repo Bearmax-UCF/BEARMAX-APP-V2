@@ -40,27 +40,15 @@ class SocketService {
     });
   }
 
-/*
-  //Start game
-  void startEmotionGame() {
-    socket.emit('emotionGame', 'start');
-  }
-
-  // Stop Game
-  void stopEmotionGame() {
-    socket.emit('emotionGame', 'stop');
-  }
-*/
-
 // Match the pose - happy, sad, angry, confused, shocked, worried, scared, annoyed
-void emotion(String myEmotion) {
-  socket.emit('emotionGame', myEmotion);
-}
+  void emotion(String myEmotion) {
+    socket.emit('emotionGame', myEmotion);
+  }
 
 // Play sensory overload
-void sensoryOverload(String name, bool video, bool audio) {
-
-    String map = '{"mediaName": "$name","videoBool": $video,"audioBool": $audio}';
+  void sensoryOverload(String name, bool video, bool audio) {
+    String map =
+        '{"mediaName": "$name","videoBool": $video,"audioBool": $audio}';
 
     socket.emit('playMedia', map);
 
