@@ -1,4 +1,3 @@
-
 import 'package:bearmax/api/api_service.dart';
 import 'package:bearmax/model/notes_model.dart';
 import 'package:bearmax/screens/home_screen.dart';
@@ -70,7 +69,11 @@ class _ViewNoteScreen extends State<ViewNoteScreen> {
           ],
         ),
         body: Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).size.height * 0.03,
+              left: MediaQuery.of(context).size.width * 0.05,
+              right: MediaQuery.of(context).size.width * 0.05,
+            ),
             child: Stack(children: [
               Column(children: [
                 formattedDate(note),

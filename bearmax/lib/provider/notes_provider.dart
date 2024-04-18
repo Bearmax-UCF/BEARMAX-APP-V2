@@ -1,5 +1,4 @@
 import 'package:bearmax/model/notes_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:bearmax/api/api_service.dart';
 

@@ -28,7 +28,10 @@ class _EditProfileScreen extends State<EditProfileScreen> {
         title: const Text('Edit Profile'),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 32, right: 32, top: 5, bottom: 5),
+        padding: EdgeInsets.only(
+            left: MediaQuery.of(context).size.height * 0.05,
+            right: MediaQuery.of(context).size.height * 0.05,
+            bottom: MediaQuery.of(context).size.height * 0.01),
         child: Center(
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.9,

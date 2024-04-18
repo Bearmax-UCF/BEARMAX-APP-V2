@@ -14,7 +14,6 @@ class LoginResponse {
   }
 }
 
-
 class LoginRequest {
   String email;
   String password;

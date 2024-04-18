@@ -1,10 +1,9 @@
 class SignupResponse {
   final String message;
-  
 
   SignupResponse({required this.message});
 
-  factory SignupResponse.fromJson(Map<String, dynamic> json){
+  factory SignupResponse.fromJson(Map<String, dynamic> json) {
     return SignupResponse(
       message: json["message"] ?? "",
     );
@@ -17,7 +16,11 @@ class SignupRequest {
   String lastName;
   String password;
 
-  SignupRequest({required this.email, required this.firstName, required this.lastName, required this.password});
+  SignupRequest(
+      {required this.email,
+      required this.firstName,
+      required this.lastName,
+      required this.password});
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {

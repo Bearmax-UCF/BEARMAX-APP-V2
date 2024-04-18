@@ -25,6 +25,12 @@ class _LoginPage extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+
+    final EdgeInsets padding = EdgeInsets.symmetric(
+      horizontal: screenSize.width * 0.1,
+      vertical: screenSize.height * 0.03,
+    );
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -39,7 +45,7 @@ class _LoginPage extends State<LoginPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: padding,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,7 +158,8 @@ class _LoginPage extends State<LoginPage> {
 
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomePage(initialIndex: 1)),
+              MaterialPageRoute(
+                  builder: (context) => const HomePage(initialIndex: 1)),
             );
 
             if (kDebugMode) {

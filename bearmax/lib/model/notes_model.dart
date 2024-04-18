@@ -42,14 +42,10 @@ class EditNoteRequest {
   String? title;
   String? note;
 
-  EditNoteRequest(
-      {this.title, this.note});
+  EditNoteRequest({this.title, this.note});
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> map = {
-      'title': title?.trim(),
-      'note': note?.trim()
-    };
+    Map<String, dynamic> map = {'title': title?.trim(), 'note': note?.trim()};
 
     return map;
   }

@@ -5,7 +5,6 @@ import 'package:bearmax/screens/login_screen.dart';
 import 'package:bearmax/util/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:cool_alert/cool_alert.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -153,26 +152,28 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
 
   // Reset widget
   void showResetPasswordDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("Success"),
-        content: const Text("Please check your email to reset your password."),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); 
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-            );
-            },
-            child: const Text("Okay", style: TextStyle(color: Palette.accentColor)),
-          ),
-        ],
-      );
-    },
-  );
-}
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Success"),
+          content:
+              const Text("Please check your email to reset your password."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              },
+              child: const Text("Okay",
+                  style: TextStyle(color: Palette.accentColor)),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

@@ -8,29 +8,38 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    final EdgeInsets padding = EdgeInsets.symmetric(
+      horizontal: screenSize.width * 0.1,
+      vertical: screenSize.height * 0.03,
+    );
+
     return Scaffold(
       backgroundColor: Palette.primaryColor,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 150),
-            logo(),
-            const SizedBox(height: 130),
-            button("Sign In", true, () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginPage()),
-              );
-            }),
-            const SizedBox(height: 10),
-            button("Create Account", false, () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const SignupPage()),
-              );
-            })
-          ],
+        child: Padding(
+          padding: padding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: screenSize.height * 0.05),
+              logo(),
+              SizedBox(height: screenSize.height * 0.2),
+              button("Sign In", true, () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
+              }),
+              const SizedBox(height: 10),
+              button("Create Account", false, () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignupPage()),
+                );
+              })
+            ],
+          ),
         ),
       ),
     );
